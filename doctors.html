@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Organizational Chart | Health Services Unit | ASCOT</title>
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #013219; 
+            --primary-main: #006838;
+            --primary-accent: #2c8c56; 
+            --gold-main: #fce268;
+            --gold-soft: #fff9e6;
+            --slate-700: #334155;
+            --slate-500: #64748b;
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+            --transition: all 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--slate-700);
+            background-color: #fcfcfc;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-link { 
+            font-family: 'Poppins', sans-serif; 
+        }
+
+        /* --- Header & Navigation --- */
+        .top-header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        
+        .masthead-logo { 
+            max-height: clamp(50px, 8vw, 80px); 
+            width: auto; 
+            transition: var(--transition); 
+        }
+
+        /* --- Desktop Nav Styles --- */
+        @media (min-width: 992px) {
+            .nav-link {
+                color: var(--slate-700) !important;
+                font-weight: 600;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                padding: 10px 16px !important;
+                position: relative;
+                transition: var(--transition);
+            }
+            
+            .nav-link:hover, .nav-link.active { 
+                color: var(--primary-main) !important; 
+            }
+            
+            .nav-link::after {
+                content: ''; 
+                position: absolute; 
+                width: 0; 
+                height: 2px;
+                bottom: 5px; 
+                left: 16px; 
+                background: var(--primary-main);
+                transition: var(--transition);
+                border-radius: 2px;
+            }
+            .nav-link:hover::after, .nav-link.active::after { 
+                width: calc(100% - 32px); 
+            }
+        }
+        
+        /* --- SPLIT DROPDOWN: Clickable About Us + Arrow beside --- */
+        .nav-item.custom-dropdown {
+            position: relative;
+        }
+        
+        .split-dropdown-wrapper {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            gap: 0;
+        }
+        
+        /* Main "About Us" link - clickable, goes to about page */
+        .about-main-link {
+            color: var(--slate-700) !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 10px 6px 10px 16px !important;
+            position: relative;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 40px;
+        }
+        
+        .about-main-link:hover, .about-main-link.active { 
+            color: var(--primary-main) !important; 
+        }
+        
+        /* Desktop underline for about link */
+        @media (min-width: 992px) {
+            .about-main-link::after {
+                content: ''; 
+                position: absolute; 
+                width: 0; 
+                height: 2px;
+                bottom: 5px; 
+                left: 16px; 
+                background: var(--primary-main);
+                transition: var(--transition);
+                border-radius: 2px;
+            }
+            .about-main-link:hover::after, .about-main-link.active::after {
+                width: calc(100% - 32px);
+            }
+        }
+        
+        /* Arrow button - directly beside text */
+        .dropdown-arrow-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 16px 10px 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: var(--primary-main);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+        }
+        
+        .dropdown-arrow-btn i {
+            font-size: 0.75rem;
+            transition: transform 0.25s ease;
+            pointer-events: none;
+        }
+        
+        .dropdown-arrow-btn:hover {
+            color: var(--primary-dark);
+            background: rgba(0,104,56,0.05);
+        }
+        
+        .custom-dropdown.show .dropdown-arrow-btn i {
+            transform: rotate(180deg);
+        }
+        
+        /* Desktop dropdown menu */
+        @media (min-width: 992px) {
+            .dropdown-menu-custom {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(20px);
+                transition: opacity 0.25s ease, visibility 0.25s, transform 0.25s;
+                border: none !important;
+                border-top: 3px solid var(--primary-main) !important;
+                border-radius: 0 0 20px 20px !important;
+                background: #ffffff;
+                padding: 12px 8px !important;
+                min-width: 260px;
+                box-shadow: var(--shadow-lg) !important;
+                margin-top: 8px;
+                list-style: none;
+            }
+            
+            .dropdown-menu-custom.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+        }
+        
+        /* --- FULLY RESPONSIVE MOBILE MENU (3-LINE HAMBURGER ICON) --- */
+        @media (max-width: 991.98px) {
+            /* Custom 3-line hamburger icon */
+            .navbar-toggler {
+                border: none;
+                padding: 8px 10px;
+                background: rgba(0,104,56,0.06);
+                border-radius: 12px;
+                transition: var(--transition);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                width: 44px;
+                height: 44px;
+                cursor: pointer;
+            }
+            
+            .navbar-toggler:focus {
+                box-shadow: none;
+                outline: none;
+                background: rgba(0,104,56,0.12);
+            }
+            
+            /* Three line bars */
+            .hamburger-line {
+                width: 24px;
+                height: 2px;
+                background-color: var(--primary-dark);
+                border-radius: 4px;
+                transition: all 0.25s ease;
+                display: block;
+            }
+            
+            /* When toggler is expanded (menu open), transform to X */
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+            
+            /* Hide default bootstrap toggler icon */
+            .navbar-toggler-icon {
+                display: none;
+            }
+            
+            /* Collapsible menu container */
+            .navbar-collapse {
+                background: white;
+                padding: 1.8rem 1.5rem;
+                border-radius: 28px;
+                box-shadow: var(--shadow-lg);
+                margin-top: 18px;
+                border: 1px solid rgba(0,0,0,0.04);
+                max-height: 80vh;
+                overflow-y: auto;
+                transition: all 0.3s ease;
+            }
+            
+            /* Nav items column layout */
+            .navbar-nav {
+                gap: 0.5rem;
+                width: 100%;
+            }
+            
+            .nav-item {
+                width: 100%;
+            }
+            
+            /* Regular nav links */
+            .nav-link {
+                color: var(--slate-700) !important;
+                font-weight: 600;
+                font-size: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+                padding: 12px 16px !important;
+                display: block;
+                width: 100%;
+                border-radius: 16px;
+                transition: var(--transition);
+            }
+            
+            .nav-link:hover {
+                background-color: var(--gold-soft);
+                color: var(--primary-main) !important;
+                transform: translateX(5px);
+            }
+            
+            /* About Us split wrapper in mobile */
+            .split-dropdown-wrapper {
+                width: 100%;
+                justify-content: space-between;
+                background: transparent;
+                border-radius: 16px;
+            }
+            
+            .about-main-link {
+                flex: 1;
+                padding: 12px 16px !important;
+                font-size: 1rem;
+                border-radius: 16px;
+            }
+            
+            .about-main-link:hover {
+                background-color: var(--gold-soft);
+                color: var(--primary-main) !important;
+            }
+            
+            .dropdown-arrow-btn {
+                padding: 12px 20px;
+                background: rgba(0,0,0,0.02);
+                border-radius: 40px;
+                margin-left: 4px;
+            }
+            
+            .dropdown-arrow-btn:hover {
+                background: rgba(0,104,56,0.08);
+            }
+            
+            /* Mobile dropdown menu */
+            .dropdown-menu-custom {
+                position: static !important;
+                float: none;
+                width: 100%;
+                background: #f8fafc;
+                border: none !important;
+                border-left: 3px solid var(--primary-accent) !important;
+                border-radius: 0 20px 20px 0 !important;
+                padding: 8px 0 !important;
+                margin-top: 8px;
+                margin-bottom: 4px;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 6px 14px rgba(0,0,0,0.04);
+                transform: none !important;
+                opacity: 1 !important;
+                display: none;
+            }
+            
+            .dropdown-menu-custom.show {
+                display: block;
+            }
+        }
+        
+        /* dropdown items styling */
+        .dropdown-item-custom {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--slate-700);
+            transition: var(--transition);
+            text-decoration: none;
+            border-radius: 12px;
+        }
+        
+        .dropdown-item-custom i {
+            width: 24px;
+            font-size: 0.9rem;
+            color: var(--primary-accent);
+        }
+        
+        .dropdown-item-custom:hover {
+            background-color: var(--gold-soft);
+            color: var(--primary-main);
+            transform: translateX(5px);
+        }
+        
+        .dropdown-divider-custom {
+            margin: 8px 12px;
+            height: 1px;
+            background-color: rgba(0,0,0,0.08);
+        }
+        
+        /* --- Hero/Title Bar --- */
+        .title-bar {
+            background: linear-gradient(125deg, var(--primary-dark) 0%, var(--primary-main) 100%);
+            padding: clamp(40px, 8vw, 70px) 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .title-bar::after {
+            content: '';
+            position: absolute;
+            right: -5%;
+            top: -50%;
+            width: 320px;
+            height: 320px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .title-bar h2 { 
+            font-size: clamp(2rem, 5vw, 3.5rem); 
+            font-weight: 800; 
+            margin: 0; 
+            letter-spacing: -0.5px; 
+            position: relative;
+            z-index: 2;
+        }
+        
+        .title-bar p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 12px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--gold-main);
+        }
+
+        /* --- Organizational Chart Tree Styles --- */
+        .tree-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .tree {
+            min-width: 800px;
+        }
+        
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+        }
+
+        /* Lines Connection */
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1.5px solid #94a3b8;
+            width: 50%;
+            height: 20px;
+        }
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1.5px solid #94a3b8;
+        }
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+        .tree li:only-child {
+            padding-top: 0;
+        }
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+        .tree li:last-child::before {
+            border-right: 1.5px solid #94a3b8;
+            border-radius: 0 5px 0 0;
+        }
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+        }
+        .tree ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1.5px solid #94a3b8;
+            width: 0;
+            height: 20px;
+        }
+
+        /* Node Design */
+        .org-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .org-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-main), #ffd966);
+            margin-bottom: -12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+        .org-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .org-box {
+            background: white;
+            border: 1.5px solid var(--primary-main);
+            padding: 15px 10px 8px 10px;
+            min-width: 180px;
+            z-index: 2;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .org-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold-main);
+        }
+        .org-box h6 {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+        .org-box p {
+            font-size: 0.65rem;
+            color: var(--slate-500);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* --- Footer Styles --- */
+        .footer-chevron-container { 
+            position: relative; 
+            height: clamp(100px, 15vw, 180px); 
+            background: #fcfcfc; 
+        }
+        
+        .chevron-bg { 
+            position: absolute; top: 0; width: 100%; height: 100%; 
+            background: var(--gold-main); 
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%); 
+        }
+        
+        .chevron-inner { 
+            position: absolute; top: 0; width: 100%; height: 80%; 
+            background: var(--primary-accent); 
+            clip-path: polygon(0 0, 100% 0, 100% 40%, 50% 100%, 0 40%); 
+        }
+        
+         .footer-center-logo { 
+    position: absolute; 
+    left: 50%; 
+    bottom: -60px;
+    transform: translateX(-50%); 
+    width: clamp(180px, 20vw, 280px); 
+    z-index: 5; 
+    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25)); 
+    border-radius: 80px;
+    padding: 10px;
+}
+        
+        .footer-brand-text {
+            font-size: clamp(1.1rem, 3vw, 1.4rem); 
+            font-weight: 900; 
+            letter-spacing: clamp(1px, 0.5vw, 4px); 
+            line-height: 1.4;
+            margin-bottom: 5px; 
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-contact-link {
+            color: rgba(255, 255, 255, 0.75) !important;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .footer-contact-link:hover { 
+            color: var(--gold-main) !important; 
+            transform: translateX(3px);
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 60px;
+            transition: var(--transition);
+            font-size: 1.3rem;
+        }
+        .social-btn:hover {
+            background: var(--primary-main);
+            color: white !important;
+            transform: translateY(-4px);
+        }
+        
+        @media (max-width: 768px) {
+            .org-box {
+                min-width: 140px;
+                padding: 10px 6px;
+            }
+            .org-box h6 {
+                font-size: 0.65rem;
+            }
+            .org-box p {
+                font-size: 0.55rem;
+            }
+            .org-avatar {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header sticky-top">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand p-0" href="index.html">
+                    <img src="assets/logo2.png" alt="ASCOT Logo" class="masthead-logo" onerror="this.src='https://placehold.co/80x80?text=ASCOT'">
+                </a>
+                
+                <!-- 3-line hamburger menu button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+                    <ul class="navbar-nav align-items-lg-center">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        
+                        <!-- About Us: Clickable text + Dropdown Arrow right beside -->
+                        <li class="nav-item custom-dropdown" id="aboutSplitDropdown">
+                            <div class="split-dropdown-wrapper">
+                                <a class="about-main-link" href="about.html">About Us</a>
+                                <button class="dropdown-arrow-btn" id="dropdownArrowBtn" aria-label="Toggle dropdown menu">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <ul class="dropdown-menu-custom" id="aboutDropdownMenu">
+                                <li><a class="dropdown-item-custom" href="about.html#clinic"><i class="fas fa-clinic-medical"></i> College Clinic</a></li>
+                                <li><a class="dropdown-item-custom" href="about.html#schedule"><i class="far fa-calendar-alt"></i> Doctor's Schedule</a></li>
+                                <li><a class="dropdown-item-custom" href="about.html#objectives"><i class="fas fa-bullseye"></i> Specific Objectives</a></li>
+                                <li><div class="dropdown-divider-custom"></div></li>
+                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision & Mission</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="#">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="doctors.html">Doctors</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact-footer">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="title-bar">
+        <div class="container">
+            <h2>Organizational Chart</h2>
+            <p>Health Services Unit</p>
+        </div>
+    </section>
+
+    <main class="tree-wrapper">
+        <div class="tree">
+            <ul>
+                <li>
+                    <div class="org-wrapper">
+                        <div class="org-avatar"><img src="assets/president.png" alt="Renato G. Reyes" onerror="this.src='https://placehold.co/80x80?text=President'"></div>
+                        <div class="org-box"><h6>RENATO G. REYES, PhD</h6><p>SUC President II</p></div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="org-wrapper">
+                                <div class="org-avatar"><img src="assets/vp.png" alt="Mayreen V. Amazona" onerror="this.src='https://placehold.co/80x80?text=VP'"></div>
+                                <div class="org-box"><h6>MAYREEN V. AMAZONA</h6><p>Vice President of Academic Affairs</p></div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="org-wrapper">
+                                        <div class="org-avatar"><img src="assets/ma melisa.png" alt="Melissa Grace P. Nacino" onerror="this.src='https://placehold.co/80x80?text=OSAS'"></div>
+                                        <div class="org-box"><h6>MELISSA GRACE P. NACINO</h6><p>OSAS Director</p></div>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="org-wrapper">
+                                                <div class="org-avatar"><img src="assets/doc.png" alt="Marilyn Gante-Escoto" onerror="this.src='https://placehold.co/80x80?text=MD'"></div>
+                                                <div class="org-box"><h6>MARILYN GANTE-ESCOTO, MD</h6><p>Medical Specialist</p></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="org-wrapper">
+                                                <div class="org-avatar"><img src="assets/gena.png" alt="Genalyn C. Gudoy" onerror="this.src='https://placehold.co/80x80?text=Nurse'"></div>
+                                                <div class="org-box"><h6>GENALYN C. GUDOY, RN</h6><p>College Nurse II</p></div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="org-wrapper">
+                                                        <div class="org-avatar"><img src="assets/rose.png" alt="Mary Rose E. Valencerina" onerror="this.src='https://placehold.co/80x80?text=RN'"></div>
+                                                        <div class="org-box"><h6>MARY ROSE E. VALENCERINA, RN</h6><p>Nurse I</p></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="org-wrapper">
+                                                        <div class="org-avatar"><img src="assets/pong.png" alt="Jan Neil R. De Guzman" onerror="this.src='https://placehold.co/80x80?text=RN'"></div>
+                                                        <div class="org-box"><h6>JAN NEIL R. DE GUZMAN, RN</h6><p>Nurse I</p></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="org-wrapper">
+                                                        <div class="org-avatar"><img src="assets/tin.png" alt="Christine G. Amon" onerror="this.src='https://placehold.co/80x80?text=RN'"></div>
+                                                        <div class="org-box"><h6>CHRISTINE G. AMON, RN</h6><p>Nurse I</p></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="org-wrapper">
+                                                        <div class="org-avatar"><img src="assets/jeh.png" alt="Jerold M. Moral" onerror="this.src='https://placehold.co/80x80?text=RN'"></div>
+                                                        <div class="org-box"><h6>JEROLD M. MORAL, RN</h6><p>Nurse I</p></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="org-wrapper">
+                                                <div class="org-avatar"><img src="assets/dentist.png" alt="Abegueie Q. Laher" onerror="this.src='https://placehold.co/80x80?text=Dentist'"></div>
+                                                <div class="org-box"><h6>ABEGUEIE Q. LAHER</h6><p>Dentist</p></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <footer id="contact-footer" class="bg-dark text-white-50 mt-5">
+        <div class="footer-chevron-container">
+            <div class="chevron-bg"></div>
+            <div class="chevron-inner"></div>
+            <img src="assets/hsu_logo.png" class="footer-center-logo" alt="ASCOT" onerror="this.src='https://placehold.co/140x140?text=HSU'">
+        </div>
+
+        <div class="container py-5 mt-4">
+            <div class="row g-4 text-center">
+                <div class="col-12 mb-3 mt-4 mt-md-0">
+                    <h1 class="footer-brand-text mb-0">AURORA STATE COLLEGE OF TECHNOLOGY</h1>
+                    <p class="text-warning fw-bold text-uppercase mb-4" style="letter-spacing: 2px;">Health Services Unit</p>
+                </div>
+            </div>
+
+            <div class="row g-4 text-center text-md-start pt-4">
+                <!-- Quick Navigation Links (replaced Governance) -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Quick Links</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-home me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-blog me-2"></i>Blogs</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-stethoscope me-2"></i>Services</a></li>
+                        <li class="mb-2"><a href="doctors.html" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-user-md me-2"></i>Doctors</a></li>
+                        <li class="mb-2"><a href="#contact-footer" class="text-white-50 text-decoration-none footer-contact-link"><i class="fas fa-envelope me-2"></i>Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Connect with us -->
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Connect with us</h6>
+                    <a href="https://www.facebook.com/ascotclinic" target="_blank" class="text-white fs-5 social-btn">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                
+                <!-- Contact Details -->
+                <div class="col-md-4 text-center text-md-end">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Contact Details</h6>
+                    <p class="small mb-2">
+                        <a href="mailto:ascothealthservices@gmail.com" class="footer-contact-link">
+                            <i class="fas fa-envelope me-2"></i>ascothealthservices@gmail.com
+                        </a>
+                    </p>
+                    <p class="small mb-0">
+                        <a href="tel:09123456789" class="footer-contact-link">
+                            <i class="fas fa-phone-alt me-2"></i>0912-345-6789
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="border-top border-secondary mt-5 pt-4 text-center">
+                <p class="small mb-0 text-white-50">&copy; 2026 Health Services Unit, ASCOT. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function() {
+            const arrowBtn = document.getElementById('dropdownArrowBtn');
+            const dropdownMenu = document.getElementById('aboutDropdownMenu');
+            const parentDropdown = document.getElementById('aboutSplitDropdown');
+            const navbarCollapse = document.getElementById('mainNav');
+            
+            function closeAboutDropdown() {
+                if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                    if (parentDropdown) parentDropdown.classList.remove('show');
+                    if (arrowBtn) arrowBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+            
+            // Auto-close dropdown on scroll (mobile only)
+            let scrollTimer;
+            window.addEventListener('scroll', function() {
+                if (window.innerWidth < 992) {
+                    if (scrollTimer) clearTimeout(scrollTimer);
+                    closeAboutDropdown();
+                }
+            });
+            
+            // Toggle dropdown on arrow click
+            if (arrowBtn && dropdownMenu) {
+                arrowBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const isExpanded = dropdownMenu.classList.contains('show');
+                    document.querySelectorAll('.dropdown-menu-custom.show').forEach(menu => {
+                        if (menu !== dropdownMenu) menu.classList.remove('show');
+                    });
+                    if (isExpanded) {
+                        dropdownMenu.classList.remove('show');
+                        if (parentDropdown) parentDropdown.classList.remove('show');
+                        arrowBtn.setAttribute('aria-expanded', 'false');
+                    } else {
+                        dropdownMenu.classList.add('show');
+                        if (parentDropdown) parentDropdown.classList.add('show');
+                        arrowBtn.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            }
+            
+            // Close when clicking outside
+            document.addEventListener('click', function(event) {
+                if (parentDropdown && !parentDropdown.contains(event.target)) {
+                    closeAboutDropdown();
+                }
+            });
+            
+            if (dropdownMenu) {
+                dropdownMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+            }
+            
+            // Close mobile menu when nav link clicked
+            const allNavLinks = document.querySelectorAll('.nav-link, .about-main-link, .dropdown-item-custom');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 992) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse && navbarCollapse.classList.contains('show')) {
+                            bsCollapse.hide();
+                            const toggler = document.querySelector('.navbar-toggler');
+                            if (toggler) toggler.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                    closeAboutDropdown();
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

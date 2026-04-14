@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Blogs & Updates | Health Services Unit | ASCOT</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #013219; 
+            --primary-main: #006838;
+            --primary-accent: #2c8c56; 
+            --gold-main: #fce268;
+            --gold-soft: #fff9e6;
+            --slate-700: #334155;
+            --slate-500: #64748b;
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+            --transition: all 0.3s ease-in-out;
+            
+            --bg-body: #fcfcfc;
+            --bg-card: #ffffff;
+            --bg-header: rgba(255, 255, 255, 0.96);
+            --text-primary: #334155;
+            --text-muted: #64748b;
+            --border-light: rgba(0,0,0,0.05);
+            --footer-bg: #1a1e2b;
+            --footer-text: rgba(255,255,255,0.75);
+            --dropdown-bg: #ffffff;
+        }
+        
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-card: #1e1e2a;
+            --bg-header: rgba(18, 18, 24, 0.96);
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-light: rgba(255,255,255,0.08);
+            --footer-bg: #0a0c15;
+            --footer-text: rgba(255,255,255,0.7);
+            --dropdown-bg: #252532;
+            background-color: var(--bg-body);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+        
+        body.dark-mode .blog-card,
+        body.dark-mode .modal-content {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-light);
+        }
+        
+        body.dark-mode .modal-header {
+            border-bottom-color: var(--border-light);
+        }
+        
+        body.dark-mode .modal-footer {
+            border-top-color: var(--border-light);
+        }
+        
+        body.dark-mode .navbar-collapse {
+            background: var(--bg-card);
+            border-color: var(--border-light);
+        }
+        
+        body.dark-mode .top-header {
+            background: var(--bg-header);
+        }
+        
+        h1, h2, h3, h4, h5, h6, .nav-link { 
+            font-family: 'Poppins', sans-serif; 
+        }
+
+        .top-header {
+            background: var(--bg-header);
+            backdrop-filter: blur(12px);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        
+        .masthead-logo { 
+            max-height: clamp(50px, 8vw, 80px); 
+            width: auto; 
+        }
+
+        @media (min-width: 992px) {
+            .nav-link {
+                color: var(--text-primary) !important;
+                font-weight: 600;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                padding: 10px 16px !important;
+                position: relative;
+            }
+            .nav-link:hover, .nav-link.active { color: var(--primary-main) !important; }
+            .nav-link::after {
+                content: ''; position: absolute; width: 0; height: 2px;
+                bottom: 5px; left: 16px; background: var(--primary-main);
+                transition: var(--transition);
+            }
+            .nav-link:hover::after, .nav-link.active::after { width: calc(100% - 32px); }
+        }
+        
+        .nav-item.custom-dropdown { position: relative; }
+        .split-dropdown-wrapper { display: flex; align-items: center; gap: 0; }
+        .about-main-link {
+            color: var(--text-primary) !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 10px 6px 10px 16px !important;
+            text-decoration: none;
+        }
+        .about-main-link:hover, .about-main-link.active { color: var(--primary-main) !important; }
+        @media (min-width: 992px) {
+            .about-main-link::after {
+                content: ''; position: absolute; width: 0; height: 2px;
+                bottom: 5px; left: 16px; background: var(--primary-main);
+                transition: var(--transition);
+            }
+            .about-main-link:hover::after, .about-main-link.active::after { width: calc(100% - 32px); }
+        }
+        
+        .dropdown-arrow-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 16px 10px 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: var(--primary-main);
+        }
+        .dropdown-arrow-btn i { transition: transform 0.25s ease; }
+        .custom-dropdown.show .dropdown-arrow-btn i { transform: rotate(180deg); }
+        
+        @media (min-width: 992px) {
+            .dropdown-menu-custom {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(20px);
+                transition: opacity 0.25s ease, visibility 0.25s, transform 0.25s;
+                border: none !important;
+                border-top: 3px solid var(--primary-main) !important;
+                border-radius: 0 0 20px 20px !important;
+                background: var(--dropdown-bg);
+                padding: 12px 8px !important;
+                min-width: 260px;
+                box-shadow: var(--shadow-lg) !important;
+                margin-top: 8px;
+                list-style: none;
+            }
+            .dropdown-menu-custom.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        }
+        
+        @media (max-width: 991.98px) {
+            .navbar-toggler {
+                border: none;
+                padding: 8px 10px;
+                background: rgba(0,104,56,0.06);
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                width: 44px;
+                height: 44px;
+            }
+            .hamburger-line {
+                width: 24px;
+                height: 2px;
+                background-color: var(--primary-dark);
+                border-radius: 4px;
+                transition: all 0.25s ease;
+                display: block;
+            }
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(2) { opacity: 0; }
+            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+            .navbar-toggler-icon { display: none; }
+            .navbar-collapse {
+                background: var(--bg-card);
+                padding: 1.8rem 1.5rem;
+                border-radius: 28px;
+                box-shadow: var(--shadow-lg);
+                margin-top: 18px;
+                border: 1px solid var(--border-light);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            .navbar-nav { gap: 0.5rem; width: 100%; }
+            .nav-item { width: 100%; }
+            .nav-link {
+                color: var(--text-primary) !important;
+                font-size: 1rem;
+                padding: 12px 16px !important;
+                display: block;
+                width: 100%;
+                border-radius: 16px;
+            }
+            .split-dropdown-wrapper { width: 100%; justify-content: space-between; }
+            .about-main-link { flex: 1; padding: 12px 16px !important; font-size: 1rem; }
+            .dropdown-arrow-btn { padding: 12px 20px; margin-left: 4px; }
+            .dropdown-menu-custom {
+                position: static !important;
+                width: 100%;
+                background: #f8fafc;
+                border-left: 3px solid var(--primary-accent) !important;
+                border-radius: 0 20px 20px 0 !important;
+                padding: 8px 0 !important;
+                margin-top: 8px;
+                display: none;
+            }
+            .dropdown-menu-custom.show { display: block; }
+            .dropdown-item-custom { padding: 12px 18px; font-size: 0.95rem; }
+        }
+        
+        .dropdown-item-custom {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+        }
+        .dropdown-item-custom i { width: 24px; color: var(--primary-accent); }
+        .dropdown-item-custom:hover { background-color: var(--gold-soft); color: var(--primary-main); transform: translateX(5px); }
+        .dropdown-divider-custom { margin: 8px 12px; height: 1px; background-color: rgba(0,0,0,0.08); }
+        
+        .title-bar {
+            background: linear-gradient(125deg, var(--primary-dark) 0%, var(--primary-main) 100%);
+            padding: clamp(40px, 8vw, 70px) 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .title-bar h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; }
+        .title-bar p { opacity: 0.9; margin-top: 12px; }
+        
+        /* Blog Cards */
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-main);
+        }
+        .blog-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+        }
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .blog-card:hover .blog-image { transform: scale(1.05); }
+        .blog-date {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: var(--primary-main);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .blog-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .blog-category {
+            display: inline-block;
+            background: var(--gold-soft);
+            color: var(--primary-main);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 12px;
+        }
+        .blog-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
+        .blog-excerpt { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+        .read-more {
+            color: var(--primary-main);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+        }
+        .read-more:hover { gap: 12px; color: var(--primary-dark); }
+        
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 24px;
+            border: none;
+            background: var(--bg-card);
+        }
+        .modal-header {
+            border-bottom: 1px solid var(--border-light);
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+        }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer {
+            border-top: 1px solid var(--border-light);
+            padding: 1rem 1.5rem 1.5rem;
+        }
+        .modal-image {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+        }
+        .modal-category {
+            background: var(--gold-soft);
+            color: var(--primary-main);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        
+        /* Footer */
+        .footer-chevron-container { position: relative; height: clamp(100px, 15vw, 180px); background: var(--bg-body); }
+        .chevron-bg { position: absolute; top: 0; width: 100%; height: 100%; background: var(--gold-main); clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%); }
+        .chevron-inner { position: absolute; top: 0; width: 100%; height: 80%; background: var(--primary-accent); clip-path: polygon(0 0, 100% 0, 100% 40%, 50% 100%, 0 40%); }
+        .footer-center-logo { position: absolute; left: 50%; bottom: -60px; transform: translateX(-50%); width: clamp(180px, 20vw, 280px); z-index: 5; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25)); border-radius: 80px; padding: 10px; }
+        .footer-brand-text { font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 900; letter-spacing: clamp(1px, 0.5vw, 4px); background: linear-gradient(to bottom, #ffffff, #e0e0e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-contact-link { color: var(--footer-text) !important; text-decoration: none; transition: var(--transition); display: inline-block; }
+        .footer-contact-link:hover { color: var(--gold-main) !important; transform: translateX(3px); }
+        .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 60px; transition: var(--transition); font-size: 1.3rem; }
+        .social-btn:hover { background: var(--primary-main); color: white !important; transform: translateY(-4px); }
+        .darkmode-footer-btn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); width: 42px; height: 42px; border-radius: 40px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; font-size: 1.2rem; margin-top: 12px; }
+        .darkmode-footer-btn:hover { background: var(--gold-main); color: #1a1e2b; transform: translateY(-3px); }
+        
+        @media (max-width: 768px) {
+            .blog-image-wrapper { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header sticky-top">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand p-0" href="index.html">
+                    <img src="assets/logo2.png" alt="ASCOT Logo" class="masthead-logo" onerror="this.src='https://placehold.co/80x80?text=ASCOT'">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+                    <ul class="navbar-nav align-items-lg-center">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item custom-dropdown" id="aboutSplitDropdown">
+                            <div class="split-dropdown-wrapper">
+                                <a class="about-main-link" href="about.html">About Us</a>
+                                <button class="dropdown-arrow-btn" id="dropdownArrowBtn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <ul class="dropdown-menu-custom" id="aboutDropdownMenu">
+                                <li><a class="dropdown-item-custom" href="about.html#clinic"><i class="fas fa-clinic-medical"></i> College Clinic</a></li>
+                                <li><a class="dropdown-item-custom" href="about.html#schedule"><i class="far fa-calendar-alt"></i> Doctor's Schedule</a></li>
+                                <li><a class="dropdown-item-custom" href="about.html#objectives"><i class="fas fa-bullseye"></i> Specific Objectives</a></li>
+                                <li><div class="dropdown-divider-custom"></div></li>
+                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision & Mission</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="blogs.html">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact-footer">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="title-bar">
+        <div class="container">
+            <h2>Health & Wellness Blog</h2>
+            <p>Stories, updates, and health tips from our Health Services Unit</p>
+        </div>
+    </section>
+
+    <main class="container py-5">
+        <div class="row g-4" id="blogsContainer">
+            <!-- Blog posts will be loaded here -->
+        </div>
+        <div class="text-center mt-5">
+            <button class="btn btn-outline-success px-5 py-2 rounded-pill" id="loadMoreBtn" style="border-color: var(--primary-main); color: var(--primary-main); font-weight: 600;">
+                Load More <i class="fas fa-arrow-down ms-2"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Blog Detail Modal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Blog Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" class="modal-image" src="" alt="">
+                    <div id="modalCategory" class="modal-category"></div>
+                    <div id="modalDate" class="text-muted small mb-3"><i class="far fa-calendar-alt me-1"></i> <span></span></div>
+                    <div id="modalContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact-footer" class="bg-dark text-white-50 mt-5" style="background-color: var(--footer-bg) !important;">
+        <div class="footer-chevron-container">
+            <div class="chevron-bg"></div>
+            <div class="chevron-inner"></div>
+            <img src="assets/hsu_logo.png" class="footer-center-logo" alt="ASCOT" onerror="this.src='https://placehold.co/140x140?text=HSU'">
+        </div>
+        <div class="container py-5 mt-4">
+            <div class="row g-4 text-center">
+                <div class="col-12 mb-3">
+                    <h1 class="footer-brand-text mb-0">AURORA STATE COLLEGE OF TECHNOLOGY</h1>
+                    <p class="text-warning fw-bold text-uppercase mb-4" style="letter-spacing: 2px;">Health Services Unit</p>
+                </div>
+            </div>
+            <div class="row g-4 text-center text-md-start pt-4">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Quick Links</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="index.html" class="footer-contact-link"><i class="fas fa-home me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="footer-contact-link"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="blogs.html" class="footer-contact-link"><i class="fas fa-blog me-2"></i>Blogs</a></li>
+                        <li class="mb-2"><a href="services.html" class="footer-contact-link"><i class="fas fa-stethoscope me-2"></i>Services</a></li>
+                        <li class="mb-2"><a href="doctors.html" class="footer-contact-link"><i class="fas fa-user-md me-2"></i>Doctors</a></li>
+                        <li class="mb-2"><a href="#contact-footer" class="footer-contact-link"><i class="fas fa-envelope me-2"></i>Contact</a></li>
+                    </ul>
+                    <button id="darkmodeFooterToggle" class="darkmode-footer-btn"><i class="fas fa-moon"></i></button>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Connect with us</h6>
+                    <a href="https://www.facebook.com/ascotclinic" target="_blank" class="text-white fs-5 social-btn"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h6 class="text-white fw-bold text-uppercase mb-3">Contact Details</h6>
+                    <p class="small mb-2"><a href="mailto:ascothealthservices@gmail.com" class="footer-contact-link"><i class="fas fa-envelope me-2"></i>ascothealthservices@gmail.com</a></p>
+                    <p class="small mb-0"><a href="tel:09123456789" class="footer-contact-link"><i class="fas fa-phone-alt me-2"></i>0912-345-6789</a></p>
+                </div>
+            </div>
+            <div class="border-top border-secondary mt-5 pt-4 text-center">
+                <p class="small mb-0 text-white-50">&copy; 2026 Health Services Unit, ASCOT. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Blog Data with many pictures and full content
+        const blogPosts = [
+            {
+                id: 1,
+                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=400&fit=crop",
+                date: "March 15, 2026",
+                category: "Mental Health",
+                title: "Prioritizing Mental Wellness Among ASCOT Students",
+                excerpt: "Learn about our new counseling services and mental health initiatives designed to support students through academic challenges.",
+                content: "<p>The Health Services Unit launched a comprehensive mental health program this month to address the growing need for psychological support among students. With the increasing academic pressure and post-pandemic adjustment, many students have reported feeling anxious and overwhelmed.</p><p>Our new initiatives include free one-on-one counseling sessions with licensed psychologists, weekly mental health awareness seminars, and a 24/7 hotline for emergency mental health support. The program also features peer support groups where students can share their experiences in a safe, confidential environment.</p><p>Since the launch, over 150 students have already signed up for counseling sessions. The response has been overwhelmingly positive, with many students expressing gratitude for the accessible mental health services on campus.</p><p>We encourage all students to prioritize their mental well-being. Remember, seeking help is a sign of strength, not weakness. Visit the Health Services Unit to schedule your confidential consultation.</p>"
+            },
+            {
+                id: 2,
+                image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&h=400&fit=crop",
+                date: "March 10, 2026",
+                category: "Dental Care",
+                title: "Free Dental Mission: A Success for the ASCOT Community",
+                excerpt: "Over 200 students and staff received free dental checkups and treatments during our recent dental mission.",
+                content: "<p>In partnership with the Provincial Health Office, the Health Services Unit organized a two-day free dental mission that benefited over 200 students, faculty, and staff. The event offered free tooth extraction, cleaning, fluoride treatment, and oral health education.</p><p>The dental mission was part of our commitment to making essential healthcare services accessible to everyone in the ASCOT community. Many participants expressed their appreciation, especially those who cannot afford regular dental checkups.</p><p>Dr. Abegueie Laher, our college dentist, led the team of volunteer dental professionals who worked tirelessly throughout the event. 'Oral health is often overlooked, but it plays a crucial role in overall well-being,' she said.</p><p>Due to the success of this mission, we are planning to hold similar events quarterly. Stay tuned for announcements about our next dental mission.</p>"
+            },
+            {
+                id: 3,
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop",
+                date: "February 28, 2026",
+                category: "Training & Safety",
+                title: "Basic Life Support and First Aid Training for Student Leaders",
+                excerpt: "Student leaders participated in hands-on training to prepare for emergency situations on campus.",
+                content: "<p>Forty student leaders from various organizations completed a two-day Basic Life Support (BLS) and First Aid Training conducted by the Health Services Unit in collaboration with the Philippine Red Cross.</p><p>The training covered CPR techniques, proper use of automated external defibrillators (AED), choking management, wound care, fracture immobilization, and emergency response protocols. Participants underwent both written and practical examinations to earn their certification.</p><p>'As student leaders, we have a responsibility to ensure the safety of our fellow students during events and activities. This training equips us with life-saving skills,' said Juan Dela Cruz, president of the Student Government.</p><p>We plan to conduct this training annually to build a network of trained first responders across the campus.</p>"
+            },
+            {
+                id: 4,
+                image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop",
+                date: "February 20, 2026",
+                category: "Nutrition",
+                title: "Nutrition Month Celebration: 'Sama-sama sa Healthy Eating'",
+                excerpt: "Highlights from our month-long campaign promoting balanced diets and healthy eating habits.",
+                content: "<p>The Health Services Unit celebrated Nutrition Month with the theme 'Sama-sama sa Healthy Eating.' The month-long campaign featured cooking demonstrations, nutrition lectures, a vegetable-growing contest, and a 'Healthy Plate' challenge among dormitory residents.</p><p>Nutritionist-dietitians from the Provincial Health Office conducted seminars on reading food labels, understanding portion sizes, and planning balanced meals on a student budget. The vegetable-growing contest encouraged students to plant their own vegetables in recycled containers, promoting sustainable and healthy eating.</p><p>The culminating activity was a healthy potluck where participants shared nutritious dishes and recipes. 'I never knew healthy food could be this delicious and affordable,' shared one student participant.</p><p>We hope that the knowledge gained during this campaign will translate into lasting healthy eating habits among the ASCOT community.</p>"
+            },
+            {
+                id: 5,
+                image: "https://images.unsplash.com/photo-1584483766114-2cea6facdf57?w=600&h=400&fit=crop",
+                date: "February 5, 2026",
+                category: "Immunization",
+                title: "Flu Vaccination Drive: Protecting Our ASCOT Family",
+                excerpt: "In partnership with the local health office, we successfully administered flu vaccines to hundreds of employees.",
+                content: "<p>The Health Services Unit, in coordination with the Municipal Health Office, conducted a two-day flu vaccination drive for ASCOT employees. A total of 350 faculty and staff members received free flu vaccines to protect against the seasonal influenza virus.</p><p>Influenza can cause severe illness and lead to missed workdays and decreased productivity. By providing free vaccinations, the college aims to maintain a healthy workforce and prevent outbreaks on campus.</p><p>Employees who received the vaccine expressed gratitude for the initiative. 'It's convenient and free. I don't have to go to the health center and wait in long lines,' said one staff member.</p><p>We encourage all unvaccinated employees and students to visit the Health Services Unit for their flu shots while supplies last.</p>"
+            },
+            {
+                id: 6,
+                image: "https://images.unsplash.com/photo-1579154204601-0150f8e1de35?w=600&h=400&fit=crop",
+                date: "January 25, 2026",
+                category: "Women's Health",
+                title: "Women's Health Awareness: Cervical Cancer Prevention",
+                excerpt: "A special seminar on cervical cancer awareness and the importance of regular screening.",
+                content: "<p>In observance of Cervical Cancer Awareness Month, the Health Services Unit hosted a seminar on cervical cancer prevention and the importance of regular screening. The event was attended by over 100 female students and employees.</p><p>Dr. Maria Santos, an OB-GYN from the Provincial Hospital, discussed the causes, symptoms, and risk factors of cervical cancer. She emphasized that cervical cancer is preventable through regular Pap smears and HPV vaccination.</p><p>Free Pap smear screenings were offered to attendees, and information about the HPV vaccine was distributed. 'Many women are unaware that cervical cancer can be prevented. Early detection saves lives,' Dr. Santos said.</p><p>The Health Services Unit will continue to offer reproductive health services and educational programs throughout the year.</p>"
+            }
+        ];
+
+        let visibleBlogs = 3;
+        const blogsContainer = document.getElementById('blogsContainer');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        function renderBlogs() {
+            const blogsToShow = blogPosts.slice(0, visibleBlogs);
+            blogsContainer.innerHTML = blogsToShow.map(post => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="blog-card" data-blog-id="${post.id}">
+                        <div class="blog-image-wrapper">
+                            <img src="${post.image}" class="blog-image" alt="${post.title}">
+                            <span class="blog-date"><i class="far fa-calendar-alt me-1"></i> ${post.date}</span>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">${post.category}</span>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-excerpt">${post.excerpt}</p>
+                            <a href="#" class="read-more" data-blog-id="${post.id}">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (visibleBlogs >= blogPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+
+            // Add click event listeners to blog cards and read more buttons
+            document.querySelectorAll('.blog-card').forEach(card => {
+                const blogId = parseInt(card.dataset.blogId);
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.read-more')) {
+                        openBlogModal(blogId);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.read-more').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const blogId = parseInt(btn.dataset.blogId);
+                    openBlogModal(blogId);
+                });
+            });
+        }
+
+        function openBlogModal(blogId) {
+            const post = blogPosts.find(p => p.id === blogId);
+            if (post) {
+                document.getElementById('modalTitle').textContent = post.title;
+                document.getElementById('modalImage').src = post.image;
+                document.getElementById('modalCategory').textContent = post.category;
+                document.getElementById('modalDate').querySelector('span').textContent = post.date;
+                document.getElementById('modalContent').innerHTML = post.content;
+                
+                const modal = new bootstrap.Modal(document.getElementById('blogModal'));
+                modal.show();
+            }
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            visibleBlogs += 3;
+            renderBlogs();
+        });
+
+        renderBlogs();
+
+        // Dropdown functionality
+        const arrowBtn = document.getElementById('dropdownArrowBtn');
+        const dropdownMenu = document.getElementById('aboutDropdownMenu');
+        const parentDropdown = document.getElementById('aboutSplitDropdown');
+        const navbarCollapse = document.getElementById('mainNav');
+        
+        function closeAboutDropdown() {
+            if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+                if (parentDropdown) parentDropdown.classList.remove('show');
+                if (arrowBtn) arrowBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+        
+        let scrollTimer;
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth < 992) {
+                if (scrollTimer) clearTimeout(scrollTimer);
+                closeAboutDropdown();
+            }
+        });
+        
+        if (arrowBtn && dropdownMenu) {
+            arrowBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isExpanded = dropdownMenu.classList.contains('show');
+                if (isExpanded) {
+                    dropdownMenu.classList.remove('show');
+                    if (parentDropdown) parentDropdown.classList.remove('show');
+                    arrowBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    dropdownMenu.classList.add('show');
+                    if (parentDropdown) parentDropdown.classList.add('show');
+                    arrowBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        }
+        
+        document.addEventListener('click', function(event) {
+            if (parentDropdown && !parentDropdown.contains(event.target)) {
+                closeAboutDropdown();
+            }
+        });
+        
+        if (dropdownMenu) {
+            dropdownMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+        }
+        
+        // Dark Mode Toggle
+        const darkToggleFooter = document.getElementById('darkmodeFooterToggle');
+        const body = document.body;
+        const footerIcon = darkToggleFooter.querySelector('i');
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            footerIcon.classList.remove('fa-moon');
+            footerIcon.classList.add('fa-sun');
+        }
+        
+        darkToggleFooter.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            if (isDark) {
+                localStorage.setItem('darkMode', 'enabled');
+                footerIcon.classList.remove('fa-moon');
+                footerIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                footerIcon.classList.remove('fa-sun');
+                footerIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
