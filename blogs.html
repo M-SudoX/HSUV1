@@ -107,8 +107,6 @@
                 background: rgba(0,104,56,0.07);
             }
         }
-        
-        /* Mobile nav - UPDATED WITH FIXES */
         @media (max-width: 991.98px) {
             .navbar-toggler {
                 border: none;
@@ -120,9 +118,6 @@
                 padding: 0; margin-left: auto;
             }
             .hamburger-line { width: 22px; height: 2px; background: var(--primary-dark); border-radius: 4px; transition: all 0.25s; }
-            
-            /* FIX: Absolute positioning for mobile dropdown */
-            .navbar { position: relative; }
             .navbar-collapse {
                 position: absolute;
                 top: 100%;
@@ -138,8 +133,7 @@
             }
             .nav-link { color: var(--text-primary) !important; font-size: 0.95rem; padding: 11px 14px !important; border-radius: 18px; font-weight: 600; }
             .nav-link:hover { background: rgba(0,104,56,0.06); color: var(--primary-main) !important; }
-
-            /* FIX: Mobile split dropdown layout */
+            
             .split-dropdown-wrapper { width: 100%; display: flex; }
             .about-main-link {
                 flex-grow: 1;
@@ -407,6 +401,14 @@
         .modal-header { border-bottom: 1px solid var(--border-light); padding: 2rem 2rem 1rem; border-radius: 36px 36px 0 0; }
         .modal-title { font-family: 'Poppins', sans-serif; font-weight: 800; color: var(--text-primary); }
         .modal-body { padding: 2rem; }
+        /* Style for internal content images within the modal */
+        .modal-body-inner-image {
+            width: 100%;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            border: 4px solid var(--border-light);
+            display: block;
+        }
         .modal-footer { border-top: 1px solid var(--border-light); padding: 1.5rem 2rem; }
         .modal-image { width: 100%; border-radius: 24px; margin-bottom: 1.5rem; border: 4px solid var(--border-light); }
         body.dark-mode .modal-content { background: var(--bg-card); border-color: var(--border-light); }
@@ -545,8 +547,7 @@
                 <span class="category-chip active" data-category="all">📰 All Posts</span>
                 <span class="category-chip" data-category="BASIC HIV Awareness">🎗️ HIV Awareness</span>
                 <span class="category-chip" data-category="Tuberculosis">🫁 Tuberculosis</span>
-                <span class="category-chip" data-category="Mental Health">🧠 Mental Health</span>
-                <span class="category-chip" data-category="Dental Care">🦷 Dental Care</span>
+                <span class="category-chip" data-category="K-Fest Marathon">🎉 K-Fest Marathon</span>
                 <span class="category-chip" data-category="Training & Safety">🛡️ Training & Safety</span>
             </div>
 
@@ -742,25 +743,145 @@
         });
 
         // ===== BLOG LOGIC =====
+        // Consolidated Posts: Each category lists unique events/images within one main caption.
         const blogPosts = [
-            { id: 29, image: "assets/hiv_awareness.jpg", date: "March 3, 2026", category: "BASIC HIV Awareness", title: "Breaking the Stigma: HIV/AIDS Education on Campus", excerpt: "The HSU conducts its annual awareness seminar to educate students on prevention, testing, and support systems.", content: "<p>Knowledge is the best defense. The ASCOT Health Services Unit recently held a campus-wide seminar titled 'Know Your Status,' focusing on HIV/AIDS awareness. The goal is to debunk myths and provide a safe space for students to ask questions.</p><p>Key highlights included lectures on antiretroviral therapy (ART), the importance of early detection, and the distribution of educational brochures. We emphasize that HIV is no longer a death sentence but a manageable condition with proper care.</p><p>Confidential testing is available by appointment at the HSU.</p>" },
-            { id: 30, image: "assets/safe_practices.jpg", date: "June 26, 2024", category: "BASIC HIV Awareness", title: "Safe Practices and Prevention Methods", excerpt: "A guide on how students can protect themselves and their partners through safe practices and regular screening.", content: "<p>In our latest wellness initiative, we are distributing 'Safe Kits' and information on pre-exposure prophylaxis (PrEP). Preventing the spread of HIV requires consistent education and access to protective resources.</p><p>Our medical team is available for one-on-one consultations regarding sexual health and risk reduction strategies. Remember, protecting yourself is an act of self-love and community responsibility.</p>" },
-            { id: 31, image: "assets/tb_awareness.jpg", date: "March 24, 2026", category: "Tuberculosis", title: "World TB Day: Yes! We Can End TB", excerpt: "ASCOT joins the global movement to end Tuberculosis through active case finding and free treatment programs.", content: "<p>March 24 marks World TB Day. TB remains one of the world's deadliest infectious killers. At ASCOT, we are committed to ensuring that our campus is TB-free.</p><p>The HSU offers free chest X-ray referrals and sputum examinations for students and staff showing symptoms such as persistent cough, night sweats, and weight loss. Early diagnosis is key to successful treatment.</p><p>TB is curable, and the treatment is free through our partner rural health units.</p>" },
-            { id: 32, image: "assets/tb_screening.jpg", date: "March 15, 2026", category: "Tuberculosis", title: "Understanding Latent vs. Active TB", excerpt: "Knowing the difference between latent and active TB is crucial for prevention and treatment compliance.", content: "<p>Not everyone infected with TB bacteria becomes sick. Latent TB means the bacteria are in your body but are 'asleep.' You are not contagious and feel fine, but the infection could wake up later.</p><p>Active TB means the bacteria are multiplying and making you sick. This version is contagious. Our clinic provides screening for both types to ensure everyone stays healthy and protected.</p>" },
-            { id: 1, image: "assets/blogs/mental_wellness.jpg", date: "March 15, 2026", category: "Mental Health", title: "Prioritizing Mental Wellness Among ASCOT Students", excerpt: "Learn about our new counseling services and mental health initiatives designed to support students through academic challenges.", content: "<p>The Health Services Unit launched a comprehensive mental health program this month. With increasing academic pressure, many students have reported feeling anxious and overwhelmed.</p><p>Our new initiatives include free one-on-one counseling sessions with licensed psychologists, weekly mental health awareness seminars, and a 24/7 hotline for emergency mental health support.</p><p>Since the launch, over 150 students have already signed up for counseling sessions. The response has been overwhelmingly positive.</p><p>Visit the Health Services Unit to schedule your confidential consultation.</p>" },
-            { id: 2, image: "assets/blogs/peer_support.jpg", date: "February 10, 2026", category: "Mental Health", title: "Peer Support Program Launch", excerpt: "A new peer support program pairs trained student volunteers with those in need of emotional support.", content: "<p>The Peer Support Program trains selected students to provide basic emotional support and referrals to professional services.</p><p>Peer supporters undergo 20 hours of training covering active listening, crisis intervention, and mental health first aid.</p><p>This initiative aims to create a more supportive campus environment.</p>" },
-            { id: 3, image: "assets/blogs/stress_management.jpg", date: "January 20, 2026", category: "Mental Health", title: "Stress Management Workshop for Exam Week", excerpt: "Students learn effective coping strategies to manage exam-related stress and anxiety.", content: "<p>In preparation for final exams, the Health Services Unit conducted a stress management workshop attended by over 200 students.</p><p>Topics included breathing techniques, time management, sleep hygiene, and recognizing signs of burnout.</p><p>Participants received stress balls and relaxation guides to help them during exam week.</p>" },
-            { id: 4, image: "assets/blogs/meditation.jpg", date: "December 5, 2025", category: "Mental Health", title: "Mindfulness Meditation Sessions", excerpt: "Weekly meditation sessions introduced to help students find calm and focus.", content: "<p>Free weekly mindfulness meditation sessions are now available every Wednesday at the Health Services Unit.</p><p>The sessions are led by trained facilitators and focus on breathing exercises, body scans, and guided imagery.</p><p>Students report improved focus and reduced anxiety after attending regularly.</p>" },
-            { id: 5, image: "assets/blogs/anxiety_awareness.jpg", date: "November 12, 2025", category: "Mental Health", title: "Understanding Depression and Anxiety", excerpt: "Educational seminar raises awareness about common mental health conditions and available resources.", content: "<p>Dr. Reyes, a clinical psychologist, discussed the signs and symptoms of depression and anxiety disorders.</p><p>The seminar emphasized that mental health conditions are treatable and encouraged students to seek help early.</p><p>Resource materials were distributed to all attendees.</p>" },
-            { id: 6, image: "assets/blogs/faculty_training.jpg", date: "October 8, 2025", category: "Mental Health", title: "Mental Health First Aid Training for Faculty", excerpt: "Faculty members trained to recognize and respond to students in mental health crisis.", content: "<p>Twenty faculty members completed Mental Health First Aid training, learning how to identify warning signs and provide initial support.</p><p>The training covered depression, anxiety, psychosis, and substance use disorders.</p><p>This creates a network of support across campus.</p>" },
-            { id: 7, image: "assets/blogs/dental_mission.jpg", date: "March 10, 2026", category: "Dental Care", title: "Free Dental Mission: A Success for the ASCOT Community", excerpt: "Over 200 students and staff received free dental checkups and treatments.", content: "<p>In partnership with the Provincial Health Office, we organized a two-day free dental mission that benefited over 200 participants.</p><p>The event offered free tooth extraction, cleaning, fluoride treatment, and oral health education.</p><p>Dr. Abegueie Laher, our college dentist, led the team. We are planning to hold similar events quarterly.</p>" },
-            { id: 8, image: "assets/blogs/dental_demo.jpg", date: "February 5, 2026", category: "Dental Care", title: "Proper Toothbrushing Techniques Demo", excerpt: "Dental students demonstrate correct brushing techniques to elementary pupils.", content: "<p>Our dental team visited the ASCOT Laboratory Elementary School to teach proper toothbrushing techniques to young students.</p><p>Children received free toothbrushes and toothpaste, and learned the importance of brushing twice daily.</p><p>The activity was met with enthusiasm from both students and teachers.</p>" },
-            { id: 9, image: "assets/blogs/oral_hygiene.jpg", date: "January 15, 2026", category: "Dental Care", title: "Oral Health Awareness Campaign", excerpt: "A week-long campaign promotes good oral hygiene habits among students.", content: "<p>The Oral Health Awareness Campaign featured booths, free checkups, and educational materials about preventing cavities and gum disease.</p><p>Students learned about the connection between oral health and overall health.</p><p>Free dental kits were distributed to participants.</p>" },
-            { id: 10, image: "assets/blogs/dental_sealant.jpg", date: "December 1, 2025", category: "Dental Care", title: "Dental Sealant Program for Children", excerpt: "Preventive dental sealants applied to children's teeth to prevent cavities.", content: "<p>The Dental Sealant Program provided free sealants to children aged 6-12 years old.</p><p>Sealants are thin coatings applied to the chewing surfaces of molars to prevent decay.</p><p>Over 80 children benefited from this preventive service.</p>" },
-            { id: 11, image: "assets/bls_training.jpg", date: "February 28, 2026", category: "Training & Safety", title: "Basic Life Support and First Aid Training", excerpt: "Student leaders trained in CPR and emergency response.", content: "<p>Forty student leaders completed BLS and First Aid Training with the Philippine Red Cross.</p><p>Topics included CPR, AED use, choking management, and wound care.</p><p>'This training equips us with life-saving skills,' said Student Government president.</p>" },
-            { id: 12, image: "assets/bls_training2.jpg", date: "November 28, 2025", category: "Training & Safety", title: "Fire Safety and Emergency Preparedness", excerpt: "Students learn fire safety protocols and evacuation procedures.", content: "<p>The Bureau of Fire Protection conducted a fire safety seminar for dormitory residents.</p><p>Topics included fire prevention, proper use of fire extinguishers, and evacuation plans.</p><p>A fire drill was also conducted to practice the skills.</p>" },
-            { id: 13, image: "assets/bls_training3.jpg", date: "October 20, 2025", category: "Training & Safety", title: "Earthquake Drill and Disaster Preparedness", excerpt: "Campus-wide earthquake drill prepares community for natural disasters.", content: "<p>The entire ASCOT community participated in the quarterly National Simultaneous Earthquake Drill.</p><p>The drill practiced the 'duck, cover, and hold' technique and evacuation procedures.</p><p>Feedback was positive, with most participants completing evacuation in under 3 minutes.</p>" },
-            { id: 14, image: "assets/bls_training4.jpg", date: "September 5, 2025", category: "Training & Safety", title: "First Aid Kit Distribution", excerpt: "Free first aid kits distributed to all departments and offices.", content: "<p>The Health Services Unit distributed fully-stocked first aid kits to all college departments and offices.</p><p>Each kit contains bandages, antiseptics, pain relievers, and emergency contact information.</p><p>Training on kit usage was also provided to department representatives.</p>" }
+            { 
+                id: 1, 
+                image: "assets/hiv_awareness.jpg", 
+                date: "March 3, 2026", 
+                category: "BASIC HIV Awareness", 
+                title: "Advancing HIV Awareness and Prevention at ASCOT", 
+                excerpt: "A comprehensive look at ASCOT's initiatives for HIV education, safe practices, and community outreach...", 
+                content: `
+                    <h5>Seminar on Strengthening Awareness and Prevention</h5>
+                    <p>On March 3, 2026, the ASCOT Student Boulevard became a venue for learning and empowerment through the program “Basic HIV Awareness” with the theme, “Strengthening Awareness and Prevention: A Human Immunodeficiency Virus (HIV) Education Seminar for Students of Aurora State College of Technology for Inclusive and Gender-Responsive Role.”</p>
+                    <p>The seminar aimed to strengthen students’ understanding of HIV, break the stigma surrounding it, and encourage responsible, inclusive, and gender-responsive actions in promoting health and prevention.</p>
+                    
+                    <hr class="my-4">
+                    
+                    <h5>Community Outreach at Fish Landing Center</h5>
+                    <img src="assets/safe_practices.jpg" class="modal-body-inner-image" alt="Safe Practices Session">
+                    <p>On June 26, 2024, a Basic HIV Awareness session was conducted at the Fish Landing Center to provide participants with important information about HIV, including its causes, modes of transmission, prevention, and the importance of ending stigma and discrimination.</p>
+                    <p>The activity served as an opportunity to raise awareness and encourage open conversations about HIV, helping participants become more informed and responsible in protecting their health.</p>
+                ` 
+            },
+            { 
+                id: 2, 
+                image: "assets/tb_awareness.jpg", 
+                date: "March 24, 2026", 
+                category: "Tuberculosis", 
+                title: "Commemorating World Tuberculosis Day: Awareness and Screening", 
+                excerpt: "ASCOT moves to #EndTB through educational programs and active screening initiatives in the college community...", 
+                content: `
+                    <h5>YES!! PILIPINAS CAN #ENDTB Initiative</h5>
+                    <p>In commemoration of World Tuberculosis Day 2026, Aurora State College of Technology held the program “Promoting Tuberculosis Awareness and Prevention in College Communities” on March 24, 2026, at the ASCOT Gymnasium, Brgy. Zabali, Baler, Aurora.</p>
+                    <p>With the theme “YES!! PILIPINAS CAN #ENDTB: Magpasuri, Magpagamot, at Mag-TPTodo para Protektado,” the activity aims to strengthen awareness about Tuberculosis, encourage early consultation and diagnosis, and promote proper treatment adherence.</p>
+                    
+                    <hr class="my-4">
+                    
+                    <h5>Active TB Screening and Education</h5>
+                    <img src="assets/tb_screening.jpg" class="modal-body-inner-image" alt="TB Screening">
+                    <p>On March 15, 2026, active screening sessions were held alongside educational talks focusing on the crucial differences between latent and active TB bacterial infections.</p>
+                    <p>Knowing the difference is vital for prevention and treatment compliance. Latent TB means bacteria are in the body but 'asleep,' while Active TB means they are multiplying and making you sick. Screening ensures everyone stays healthy and protected.</p>
+                ` 
+            },
+            { 
+                id: 3, 
+                image: "assets/k-fest1.jpg", 
+                date: "January 23, 2026", 
+                category: "K-Fest Marathon", 
+                title: "K-culture at the The Korean Festival", 
+                excerpt: "Vibing to K-culture at the Korean Festival at Baler, Ermita Hill From K-pop performances and food trucks to exciting cultural exhibits, the event brought together everyone who loves K-drama, Korean culture, and trying new experiences.", 
+                content: `
+                    <h5>K-culture at the The Korean Festival</h5>
+                    <p>Vibing to K-culture at the Korean Festival at Baler, Ermita Hill The event was filled with fun, excitement, and unforgettable experiences as everyone enjoyed K-pop performances, delicious food trucks, interactive activities, and colorful cultural exhibits. Whether you are a K-drama fan, a K-pop enthusiast, or simply someone who loves exploring new cultures, the festival truly had something for everyone.</p>
+                    
+                    <img src="assets/k-fest2.jpg" class="modal-body-inner-image" alt="K-Pop Dance Challenge">
+                    <h5>K-Pop Dance Challenge</h5>
+                    <p>Participants and visitors gathered together to celebrate Korean culture while creating meaningful memories with friends and fellow attendees. The lively atmosphere, music, and various activities made the event even more special and enjoyable for everyone present.</p>
+
+                    <img src="assets/k-fest3.jpg" class="modal-body-inner-image" alt="Health Benefits of Korean Cuisine">
+                    <h5>Celebrating Korean Culture with Safety and Care</h5>
+                    <p>As part of the celebration, the Health Services Unit also actively joined and participated in the event to help ensure the safety and well-being of all attendees, especially those who took part in the marathon activity.
+                    <img src="assets/k-fest4.jpg" class="modal-body-inner-image" alt="Medical Stations Guide">
+                    
+                    <p>The team remained on standby throughout the event to provide assistance, immediate first aid, and health support whenever needed.</p>
+
+                    <img src="assets/k-fest5.jpg" class="modal-body-inner-image" alt="Outdoor K-Drama Screening">
+                   
+                    <p>The Health Services Unit carefully monitored the condition of the participants before, during, and after the marathon to make sure everyone remained safe throughout the activity. They were prepared to respond to cases such as fatigue, dizziness, dehydration, and minor injuries, ensuring that immediate care was available at all times. Their presence gave participants peace of mind and added an extra layer of protection and support during the event.</p>
+
+                    <img src="assets/k-fest6.jpg" class="modal-body-inner-image" alt="Training Tips">
+                    <h5>Expert Training Advice</h5>
+                    <p>Through the combined efforts of the organizers, volunteers, and the Health Services Unit, the Korean Festival at Baler became not only a fun and successful celebration, but also a safe and well-supported event for everyone.</p>
+
+#kfestvolunteers
+#ASCOTCares
+#PDRRMOBALER
+#HealthServicesUnit
+#MarathonSafety
+#KoreanFestivalAtBaler
+                ` 
+            },
+            { 
+                id: 4, 
+                image: "assets/bp1.jpg", 
+                date: "March 10, 2026", 
+                category: "Heatlh monitor", 
+                title: "Promoting Health and Wellness Through Daily Care and Consultation", 
+                excerpt: "At the Health Services Unit, daily check-ups and consultations play an important role in ensuring the health and well-being of every student, faculty member, and staff...", 
+                content: `
+                    <h5>Daily Health Check-ups for a Healthier Community</h5>
+                    <p>At the Health Services Unit, daily check-ups and consultations play an important role in ensuring the health and well-being of every student, faculty member, and staff.</p>
+                    
+                    <img src="assets/bp2.jpg" class="modal-body-inner-image" alt="Toothbrushing Demo">
+                    
+                    <p>Each visit is dedicated to providing immediate medical attention to individuals experiencing health concerns or symptoms. Here, everyone is given proper time, care, and professional guidance for their health needs.</p>
+
+                    <img src="assets/bp3.jpg" class="modal-body-inner-image" alt="Oral Health Campaign">
+                    
+                    <p>Through regular consultations, potential health conditions are identified early before they become more serious. These services include basic vital sign monitoring, health advice on proper lifestyle practices, and referrals or prescriptions when necessary. The goal is not only to treat illnesses but also to promote prevention and long-term wellness.</p>
+
+                    <img src="assets/bp4.jpg" class="modal-body-inner-image" alt="Dental Sealant Program">
+                    
+                    <p>The Health Services Unit continues to provide accessible and quality healthcare services for the entire community. Every day of consultation reflects commitment to safety, comfort, and overall well-being of each individual. A healthy community begins with consistent and proper healthcare support for everyone.</p>
+                ` 
+            },
+            { 
+                id: 5, 
+                image: "assets/bls_training.jpg", 
+                date: "July 25-28, 2023", 
+                category: "Training & Safety", 
+                title: "Empowering Self with Life-Saving Knowledge: Basic Life Support with AED Training", 
+                excerpt: "From July 25 to 28, 2023, the “Basic Life Support with Automated External Defibrillator: Empowering Self with Life-Saving Knowledge” training was successfully conducted at the Accreditation Hall, Aurora State College of Technology.", 
+                content: `
+                    <h5>Basic Life Support and First Aid Training</h5>
+                    <p>From July 25 to 28, 2023, the “Basic Life Support with Automated External Defibrillator: Empowering Self with Life-Saving Knowledge” training was successfully conducted at the Accreditation Hall, Aurora State College of Technology.
+
+The four-day activity equipped participants with essential knowledge and practical skills in responding to medical emergencies. Through lectures, demonstrations, and hands-on activities, participants learned the proper procedures in performing Basic Life Support (BLS), cardiopulmonary resuscitation (CPR), and the correct use of an Automated External Defibrillator (AED).</p>
+                    
+                    <img src="assets/bls_training2.jpg" class="modal-body-inner-image" alt="Fire Safety seminar">
+                    <h5>CPR Demonstration</h5>
+                    <p>The training emphasized the importance of remaining calm, alert, and prepared during emergency situations. Participants were taught how to recognize signs of cardiac arrest and other life-threatening conditions, assess the scene, call for help, and provide immediate assistance while waiting for professional medical responders.</p>
+
+                    <img src="assets/bls_training4.jpg" class="modal-body-inner-image" alt="Earthquake Drill">
+                    <h5>Cardiac Demonstration</h5>
+                    <p>Aside from CPR and AED use, the activity also included discussions and demonstrations on choking management, rescue breathing, proper patient positioning, and other first aid techniques that may help save lives during critical situations. Participants were given the opportunity to practice these skills to strengthen their confidence and readiness in handling emergencies.</p>
+
+                    <img src="assets/bls_training3.jpg" class="modal-body-inner-image" alt="First Aid Kit Distribution">
+                    <h5>Campus-Wide BLS Training</h5>
+                    <p>By the end of the training, participants gained not only knowledge, but also a greater sense of responsibility and preparedness to help others in times of need. The activity served as a reminder that anyone can make a difference and that having the right skills at the right time can save a life.</p>
+
+#BasicLifeSupport
+#AEDTraining
+#LifeSavingKnowledge
+#EmergencyPreparedness
+#ASCOT
+#HealthServicesUnit
+#CPRTraining
+#BePreparedToSaveLives
+                ` 
+            }
         ];
 
         let visibleBlogs = 9;
@@ -777,10 +898,11 @@
         function getFilteredPosts() {
             return blogPosts.filter(post => {
                 const matchesCategory = currentCategory === "all" || post.category === currentCategory;
+                // Simplified search only checks title and category now to avoid complex HTML regex matching
                 const matchesSearch = currentSearch === "" || 
                     post.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                    post.excerpt.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                    post.content.toLowerCase().includes(currentSearch.toLowerCase());
+                    post.category.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                    post.excerpt.toLowerCase().includes(currentSearch.toLowerCase());
                 return matchesCategory && matchesSearch;
             });
         }
