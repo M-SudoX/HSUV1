@@ -116,7 +116,14 @@
                 padding: 0; margin-left: auto;
             }
             .hamburger-line { width: 22px; height: 2px; background: var(--primary-dark); border-radius: 4px; transition: all 0.25s; }
+            
+            .navbar { position: relative; }
             .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                z-index: 1050;
                 background: var(--bg-card);
                 border-radius: 28px;
                 box-shadow: var(--shadow-lg);
@@ -124,8 +131,25 @@
                 padding: 1.5rem 1.2rem;
                 border: 1px solid var(--border-light);
             }
+            
             .nav-link { color: var(--text-primary) !important; font-size: 0.95rem; padding: 11px 14px !important; border-radius: 18px; font-weight: 600; }
             .nav-link:hover { background: rgba(0,104,56,0.06); color: var(--primary-main) !important; }
+            
+            .split-dropdown-wrapper { width: 100%; display: flex; }
+            .about-main-link {
+                flex-grow: 1;
+                font-size: 0.95rem !important;
+                padding: 11px 14px !important;
+                border-radius: 18px 0 0 18px !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+            }
+            .dropdown-arrow-btn {
+                padding: 11px 20px !important;
+                border-radius: 0 18px 18px 0 !important;
+                background: rgba(0,104,56,0.04) !important;
+            }
+            .dropdown-arrow-btn:hover { background: rgba(0,104,56,0.08) !important; }
         }
 
         /* Split Dropdown */
@@ -546,7 +570,10 @@
         @media (max-width: 575.98px) {
             .stats-row { grid-template-columns: 1fr; }
             .title-bar { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
-            .service-grid { grid-template-columns: 1fr 1fr; }
+            .service-grid { grid-template-columns: 1fr; } 
+        }
+        @media (min-width: 400px) and (max-width: 575.98px) {
+            .service-grid { grid-template-columns: 1fr 1fr; } 
         }
         @media (min-width: 576px) and (max-width: 767.98px) {
             .stats-row { grid-template-columns: 1fr 1fr 1fr; }
@@ -555,7 +582,6 @@
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="top-header">
         <div class="container">
             <nav class="navbar navbar-expand-lg p-0 w-100">
@@ -595,7 +621,6 @@
         </div>
     </header>
 
-    <!-- ===== HERO TITLE BAR ===== -->
     <section class="title-bar">
         <div class="container hero-inner">
             <span class="hero-eyebrow"><i class="fas fa-heartbeat"></i> Aurora State College of Technology</span>
@@ -604,34 +629,27 @@
         </div>
     </section>
 
-    <!-- ===== MAIN CONTENT ===== -->
     <main class="main-section">
         <div class="container">
             <div class="row g-4 g-lg-5">
 
-                <!-- LEFT COLUMN -->
                 <div class="col-lg-8">
 
-                    <!-- Hero Image -->
                     <div class="main-image-wrapper mb-5">
                         <img src="assets/hsu-team.png" alt="ASCOT Medical Team" onerror="this.src='https://placehold.co/1200x580/e8f5ee/006838?text=ASCOT+Health+Team'">
-                        <div class="image-overlay-badge">
-                            <i class="fas fa-shield-heart"></i> Trusted Healthcare Since Day One
+                        <div class="">
+                            <i class=""></i>
                         </div>
                     </div>
 
-                    <!-- Intro -->
                     <div class="mb-2">
-                        <span class="section-label">Our Mission</span>
                         <h4 class="fw-bold mb-3" style="color: var(--text-primary); font-size: clamp(1.2rem, 3vw, 1.6rem);">Quality Medical Care for ASCOTians</h4>
                         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 640px;">Our dedicated unit provides essential health and wellness services to all students, faculty, and administrative personnel of Aurora State College of Technology. Compassionate, accessible, and student-focused healthcare at your doorstep.</p>
                     </div>
 
-                
-                        </div>
+                    <div class="stats-row">
                     </div>
 
-                    <!-- Services -->
                     <div class="services-section">
                         <span class="section-label">What We Offer</span>
                         <h5 class="fw-bold mb-3" style="color: var(--text-primary);">Comprehensive Services</h5>
@@ -672,7 +690,6 @@
                     </div>
                 </div>
 
-                <!-- RIGHT SIDEBAR -->
                 <div class="col-lg-4">
                     <div class="sticky-sidebar">
                         <div class="profile-card">
@@ -707,7 +724,6 @@
         </div>
     </main>
 
-    <!-- ===== FOOTER ===== -->
     <footer id="footer" class="professional-footer">
         <div class="footer-wave-top">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -716,7 +732,6 @@
         </div>
         <div class="container footer-inner">
             <div class="row g-5">
-                <!-- Brand -->
                 <div class="col-lg-4 text-center text-lg-start">
                     <img src="assets/hsu_logo.png" alt="Health Services Unit Logo" class="footer-logo-transparent" onerror="this.src='https://placehold.co/180x180?text=HSU'">
                     <span class="footer-brand-large">HEALTH SERVICES UNIT</span>
@@ -730,7 +745,6 @@
                         <button id="darkmodeFooterPro" class="darkmode-footer-btn-pro ms-1"><i class="fas fa-moon"></i></button>
                     </div>
                 </div>
-                <!-- Quick Links -->
                 <div class="col-sm-6 col-lg-2 text-center text-sm-start">
                     <h5 class="footer-heading">Quick Links</h5>
                     <ul class="footer-links">
@@ -741,7 +755,6 @@
                         <li><a href="doctors.html"><i class="fas fa-angle-right"></i> Doctors</a></li>
                     </ul>
                 </div>
-                <!-- Services Links -->
                 <div class="col-sm-6 col-lg-3 text-center text-sm-start">
                     <h5 class="footer-heading">Our Services</h5>
                     <ul class="footer-links">
@@ -752,7 +765,6 @@
                         <li><a href="#"><i class="fas fa-recycle"></i> Medical Waste Management</a></li>
                     </ul>
                 </div>
-                <!-- Contact -->
                 <div class="col-lg-3 text-center text-sm-start">
                     <h5 class="footer-heading">Get in Touch</h5>
                     <div>
@@ -832,6 +844,18 @@
                 closeAboutDD();
             });
         });
+
+        // --- NEW: Close mobile menu and dropdowns on scroll ---
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth < 992) {
+                const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
+                if (bsc && navbarCollapse.classList.contains('show')) {
+                    bsc.hide();
+                }
+            }
+            closeAboutDD();
+        }, { passive: true });
+        // ------------------------------------------------------
 
         const darkToggle = document.getElementById('darkmodeFooterPro');
         const body = document.body;

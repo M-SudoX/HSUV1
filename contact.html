@@ -113,6 +113,8 @@
                 background: rgba(0,104,56,0.07);
             }
         }
+        
+        /* Mobile nav - UPDATED WITH FIXES */
         @media (max-width: 991.98px) {
             .navbar-toggler {
                 border: none;
@@ -124,7 +126,15 @@
                 padding: 0; margin-left: auto;
             }
             .hamburger-line { width: 22px; height: 2px; background: var(--primary-dark); border-radius: 4px; transition: all 0.25s; }
+            
+            /* FIX: Absolute positioning for mobile dropdown */
+            .navbar { position: relative; }
             .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                z-index: 1050;
                 background: var(--bg-card);
                 border-radius: 28px;
                 box-shadow: var(--shadow-lg);
@@ -134,6 +144,23 @@
             }
             .nav-link { color: var(--text-primary) !important; font-size: 0.95rem; padding: 11px 14px !important; border-radius: 18px; font-weight: 600; }
             .nav-link:hover { background: rgba(0,104,56,0.06); color: var(--primary-main) !important; }
+
+            /* FIX: Mobile split dropdown layout */
+            .split-dropdown-wrapper { width: 100%; display: flex; }
+            .about-main-link {
+                flex-grow: 1;
+                font-size: 0.95rem !important;
+                padding: 11px 14px !important;
+                border-radius: 18px 0 0 18px !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+            }
+            .dropdown-arrow-btn {
+                padding: 11px 20px !important;
+                border-radius: 0 18px 18px 0 !important;
+                background: rgba(0,104,56,0.04) !important;
+            }
+            .dropdown-arrow-btn:hover { background: rgba(0,104,56,0.08) !important; }
         }
 
         /* Split Dropdown */
@@ -605,7 +632,7 @@
                                 <li><a class="dropdown-item-custom" href="about.html#schedule"><i class="far fa-calendar-alt"></i> Doctor's Schedule</a></li>
                                 <li><a class="dropdown-item-custom" href="about.html#objectives"><i class="fas fa-bullseye"></i> Specific Objectives</a></li>
                                 <li><hr style="border-color: var(--border-light); margin: 6px 12px;"></li>
-                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision &amp; Mission</a></li>
+                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision & Mission</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
@@ -799,7 +826,7 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-12 text-center">
-                        <p>&copy; 2026 Health Services Unit, Aurora State College of Technology. All rights reserved.</p>
+                        <p>© 2026 Health Services Unit, Aurora State College of Technology. All rights reserved.</p>
                     </div>
                 </div>
             </div>
@@ -855,6 +882,18 @@
                 closeAboutDD();
             });
         });
+
+        // --- NEW: Close mobile menu and dropdowns on scroll ---
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth < 992) {
+                const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
+                if (bsc && navbarCollapse.classList.contains('show')) {
+                    bsc.hide();
+                }
+            }
+            closeAboutDD();
+        }, { passive: true });
+        // ------------------------------------------------------
 
         const darkToggle = document.getElementById('darkmodeFooterPro');
         const body = document.body;
