@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Health Services Unit | Aurora State College of Technology</title>
+    <title>Contact Us | Health Services Unit | ASCOT</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <style>
+        /* ===== EXACT ROOT VARIABLES FROM INDEX ===== */
         :root {
             --primary-dark: #013219;
             --primary-main: #006838;
@@ -43,6 +49,7 @@
             --dropdown-bg: #1e2535;
             background-color: var(--bg-body);
         }
+
         *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -55,7 +62,10 @@
         }
         h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; letter-spacing: -0.02em; }
 
-        /* ===== STICKY HEADER ===== */
+        /* Hide Leaflet attribution text */
+        .leaflet-control-attribution { display: none !important; }
+
+        /* ===== HEADER (EXACTLY FROM INDEX) ===== */
         .top-header {
             position: sticky;
             top: 0;
@@ -81,7 +91,6 @@
         .masthead-logo:hover { transform: scale(1.05); }
         .navbar-brand { padding: 0; }
 
-        /* Desktop nav */
         @media (min-width: 992px) {
             .navbar-collapse { display: flex !important; align-items: center; justify-content: flex-end; flex: 1; }
             .navbar-nav { flex-direction: row; align-items: center; gap: 4px; }
@@ -104,7 +113,6 @@
                 background: rgba(0,104,56,0.07);
             }
         }
-        /* Mobile nav */
         @media (max-width: 991.98px) {
             .navbar-toggler {
                 border: none;
@@ -197,7 +205,7 @@
         body.dark-mode .about-main-link, body.dark-mode .nav-link { color: var(--text-primary) !important; }
         body.dark-mode .navbar-collapse { background: var(--bg-card); border-color: var(--border-light); }
 
-        /* ===== HERO TITLE BAR ===== */
+        /* ===== TITLE BAR (EXACTLY FROM INDEX) ===== */
         .title-bar {
             background: linear-gradient(135deg, var(--primary-dark) 0%, #015a30 55%, var(--primary-main) 100%);
             padding: clamp(56px, 10vw, 100px) 0 clamp(64px, 11vw, 112px);
@@ -205,6 +213,7 @@
             position: relative;
             overflow: hidden;
             clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%);
+            text-align: center;
         }
         .title-bar::before {
             content: '';
@@ -249,212 +258,250 @@
             opacity: 0.75;
             font-weight: 400;
             max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* ===== MAIN CONTENT ===== */
+        /* ===== CONTACT SPECIFIC STYLES ===== */
         .main-section { padding: clamp(40px, 6vw, 80px) 0; }
 
-        /* ===== HERO IMAGE ===== */
-        .main-image-wrapper {
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: var(--shadow-3d);
-            border: 5px solid #fff;
-            transition: var(--transition);
-            position: relative;
-        }
-        body.dark-mode .main-image-wrapper { border-color: rgba(255,255,255,0.1); }
-        .main-image-wrapper:hover { transform: scale(1.01) translateY(-5px); box-shadow: var(--shadow-3d-hover); }
-        .main-image-wrapper img { display: block; width: 100%; height: auto; }
-        .image-overlay-badge {
-            position: absolute; bottom: 20px; left: 20px;
-            background: rgba(1,50,25,0.88);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 50px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            border: 1px solid rgba(252,226,104,0.3);
-            display: flex; align-items: center; gap: 8px;
-        }
-        .image-overlay-badge i { color: var(--gold-main); font-size: 0.85rem; }
-
-        /* ===== SECTION LABEL ===== */
-        .section-label {
-            display: inline-flex; align-items: center; gap: 8px;
-            color: var(--primary-main);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .section-label::before {
-            content: '';
-            display: inline-block;
-            width: 20px; height: 2px;
-            background: var(--primary-main);
-            border-radius: 2px;
-        }
-
-        /* ===== SERVICES GRID ===== */
-        .services-section { margin-top: 44px; }
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
-            gap: 14px;
-        }
-        .service-card {
+        /* Contact Cards - 3D Professional */
+        .contact-card {
             background: var(--bg-card);
+            border-radius: 32px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
             border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 18px 16px 16px 20px;
-            display: flex; align-items: flex-start; gap: 14px;
-            box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            height: 100%;
             position: relative;
             overflow: hidden;
         }
-        .service-card::after {
+        .contact-card::after {
             content: '';
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-main), var(--primary-accent));
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-main), var(--gold-main));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
         }
-        .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: rgba(0,104,56,0.2); }
-        .service-card:hover::after { transform: scaleX(1); }
-        .service-icon {
-            width: 36px; height: 36px; min-width: 36px;
-            background: linear-gradient(135deg, rgba(0,104,56,0.1), rgba(0,104,56,0.06));
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary-main);
-            font-size: 0.88rem;
-            border: 1px solid rgba(0,104,56,0.12);
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-3d-hover);
         }
-        body.dark-mode .service-icon { background: rgba(0,104,56,0.2); border-color: rgba(0,104,56,0.3); }
-        .service-card-text { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; }
-        body.dark-mode .service-card { background: var(--bg-card); border-color: var(--border-light); }
+        .contact-card:hover::after { transform: scaleX(1); }
+        body.dark-mode .contact-card { background: var(--bg-card); border-color: var(--border-light); }
 
-        /* ===== STATS ROW ===== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 40px;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, var(--primary-main), var(--primary-dark));
-            border-radius: 22px;
-            padding: 22px 18px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 28px rgba(0,104,56,0.28);
+        .contact-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(0,104,56,0.08);
+            border: 1px solid rgba(0,104,56,0.12);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px auto;
+            font-size: 1.8rem;
+            color: var(--primary-main);
             transition: var(--transition);
         }
-        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,104,56,0.34); }
-        .stat-card .stat-num { font-family: 'Poppins', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; line-height: 1; color: var(--gold-main); }
-        .stat-card .stat-label { font-size: 0.72rem; font-weight: 600; opacity: 0.82; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--primary-main);
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,104,56,0.2);
+        }
+        body.dark-mode .contact-icon { background: rgba(252,226,104,0.12); color: var(--gold-main); border-color: rgba(252,226,104,0.2); }
+        
+        .contact-card h4 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .contact-card p {
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .contact-card a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .contact-card a:hover {
+            color: var(--primary-main);
+            text-decoration: underline;
+        }
 
-        /* ===== PROFILE CARD ===== */
-        .profile-card {
+        /* Map Card with Custom Red Marker */
+        .map-card {
             background: var(--bg-card);
             border-radius: 36px;
-            padding: clamp(28px, 4vw, 46px) clamp(20px, 3vw, 32px);
-            text-align: center;
+            padding: 0;
+            overflow: hidden;
             box-shadow: var(--shadow-3d);
             border: 1px solid var(--border-light);
             transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        body.dark-mode .map-card { background: var(--bg-card); border-color: var(--border-light); }
+        
+        .map-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-main));
+            padding: 24px 30px;
+            color: white;
+        }
+        .map-header h5 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 0.02em;
+        }
+        .map-header p {
+            margin: 6px 0 0;
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+        .map-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
             position: relative;
-            overflow: hidden;
+            background: var(--bg-body);
         }
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 100px;
-            background: linear-gradient(180deg, rgba(0,104,56,0.06), transparent);
-            border-radius: 36px 36px 0 0;
+        #customMap { width: 100%; height: 100%; z-index: 1; }
+
+        /* Custom Marker & Popup */
+        .custom-red-marker { background: transparent; border: none; cursor: pointer; }
+        .custom-red-marker i {
+            font-size: 48px; color: #e74c3c;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
         }
-        .profile-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-3d-hover); }
-        body.dark-mode .profile-card { background: var(--bg-card); border-color: var(--border-light); }
-        .profile-img-wrapper {
-            width: clamp(120px, 14vw, 160px);
-            height: clamp(120px, 14vw, 160px);
-            border-radius: 30px;
+        .custom-red-marker:hover i { transform: scale(1.15) translateY(-5px); }
+        
+        .custom-popup .leaflet-popup-content-wrapper {
+            border-radius: 20px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            border-left: 5px solid var(--primary-main);
             overflow: hidden;
-            border: 5px solid var(--gold-main);
-            margin: 0 auto 1.4rem;
-            box-shadow: 0 12px 32px rgba(0,104,56,0.18);
+            padding: 0;
+        }
+        .custom-popup .leaflet-popup-content { margin: 0; }
+        .custom-popup .leaflet-popup-tip { background: var(--bg-card); border: 1px solid var(--border-light); }
+        .custom-popup .leaflet-popup-close-button { color: white !important; margin-top: 8px; margin-right: 8px; font-weight: bold; }
+
+        /* Contact Form Container */
+        .contact-form-container {
+            background: var(--bg-card);
+            border-radius: 36px;
+            padding: clamp(24px, 4vw, 40px);
+            box-shadow: var(--shadow-3d);
+            border: 1px solid var(--border-light);
             transition: var(--transition);
-            position: relative; z-index: 1;
         }
-        .profile-card:hover .profile-img-wrapper { transform: scale(1.03); box-shadow: 0 16px 40px rgba(0,104,56,0.24); }
-        .profile-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .profile-name { font-size: clamp(1.05rem, 2.5vw, 1.3rem); font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
-        .profile-role {
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--primary-main);
-            background: rgba(0,104,56,0.08);
-            display: inline-block;
-            padding: 4px 14px; border-radius: 50px;
-            margin-bottom: 24px;
+        body.dark-mode .contact-form-container { background: var(--bg-card); border-color: var(--border-light); }
+        
+        .form-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        .contact-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 13px 16px;
+        .form-control, .form-select {
             border-radius: 18px;
+            padding: 14px 20px;
             border: 1px solid var(--border-light);
             background: var(--bg-body);
-            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
             transition: var(--transition);
-            margin-bottom: 10px;
-            text-align: left;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
-        .contact-item:hover { background: var(--gold-soft); border-color: var(--gold-main); transform: translateX(4px); }
-        body.dark-mode .contact-item { background: rgba(255,255,255,0.04); }
-        body.dark-mode .contact-item:hover { background: rgba(252,226,104,0.1); border-color: rgba(252,226,104,0.35); }
-        .contact-icon {
-            width: 38px; height: 38px; min-width: 38px;
-            background: rgba(0,104,56,0.1);
-            border-radius: 12px;
+        body.dark-mode .form-control, body.dark-mode .form-select {
+            background-color: rgba(255,255,255,0.03);
+            border-color: var(--border-light);
+            color: var(--text-primary);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-main);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(0,104,56,0.1);
+            outline: none;
+        }
+        
+        .btn-submit {
+            background: var(--primary-main);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+            letter-spacing: 0.04em;
+            transition: var(--transition);
+            box-shadow: 0 8px 16px rgba(0,104,56,0.2);
+        }
+        .btn-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,104,56,0.3);
+        }
+
+        /* Info Cards - Operating Hours */
+        .info-card {
+            background: linear-gradient(135deg, rgba(0,104,56,0.05) 0%, rgba(0,104,56,0.01) 100%);
+            border-radius: 28px;
+            padding: 30px;
+            border: 1px solid rgba(0,104,56,0.1);
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        body.dark-mode .info-card {
+            background: linear-gradient(135deg, rgba(252,226,104,0.05) 0%, rgba(252,226,104,0.01) 100%);
+            border-color: rgba(252,226,104,0.15);
+        }
+        .info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+        
+        .info-icon {
+            width: 54px; height: 54px; min-width: 54px;
+            background: var(--primary-main);
+            border-radius: 18px;
             display: flex; align-items: center; justify-content: center;
-            color: var(--primary-main); font-size: 0.9rem;
+            font-size: 1.4rem; color: white;
+            box-shadow: 0 6px 12px rgba(0,104,56,0.2);
         }
-        .contact-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; }
-        .contact-value { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); display: block; margin-top: 1px; word-break: break-all; }
+        body.dark-mode .info-icon { background: var(--gold-main); color: var(--primary-dark); }
 
-        /* ===== AVAILABILITY BADGE ===== */
-        .availability-badge {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(0,104,56,0.08);
-            border: 1px solid rgba(0,104,56,0.18);
-            border-radius: 16px;
-            padding: 12px 16px;
-            margin-top: 14px;
-            font-size: 0.82rem;
-            color: var(--primary-main);
-            font-weight: 600;
+        /* Alert Message */
+        .alert-message {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            z-index: 1100;
+            animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .availability-dot {
-            width: 10px; height: 10px; min-width: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.25); }
-            50% { box-shadow: 0 0 0 6px rgba(34,197,94,0.1); }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER (EXACTLY FROM INDEX) ===== */
         .professional-footer {
             background: var(--footer-bg);
             margin-top: 80px;
@@ -477,21 +524,15 @@
             display: block; margin-top: 14px;
         }
         .footer-logo-transparent {
-            max-width: clamp(110px, 14vw, 180px);
-            opacity: 0.7;
-            transition: var(--transition);
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+            max-width: clamp(110px, 14vw, 180px); opacity: 0.7; transition: var(--transition); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
         }
         .footer-logo-transparent:hover { opacity: 0.9; transform: scale(1.03); }
         .footer-heading {
-            font-size: 0.95rem; font-weight: 800;
-            letter-spacing: 0.04em; color: #fff;
-            position: relative; display: inline-block;
-            padding-bottom: 12px; margin-bottom: 20px;
+            font-size: 0.95rem; font-weight: 800; letter-spacing: 0.04em; color: #fff;
+            position: relative; display: inline-block; padding-bottom: 12px; margin-bottom: 20px;
         }
         .footer-heading::after {
-            content: ''; position: absolute;
-            bottom: 0; left: 0; width: 40px; height: 3px;
+            content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 3px;
             background: var(--gold-main); border-radius: 3px;
         }
         .footer-links { list-style: none; padding: 0; margin: 0; }
@@ -504,58 +545,40 @@
         .footer-links a i { width: 18px; font-size: 0.8rem; transition: var(--transition); }
         .footer-links a:hover { color: var(--gold-main); transform: translateX(5px); }
         .footer-contact-item {
-            display: flex; align-items: flex-start; gap: 12px;
-            margin-bottom: 14px; font-size: 0.88rem;
-            color: var(--footer-text); line-height: 1.5;
+            display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;
+            font-size: 0.88rem; color: var(--footer-text); line-height: 1.5;
         }
         .footer-contact-item i { color: var(--gold-main); font-size: 1rem; width: 20px; margin-top: 2px; flex-shrink: 0; }
         .footer-contact-item a { color: var(--footer-text); text-decoration: none; transition: var(--transition); }
         .footer-contact-item a:hover { color: var(--gold-main); }
         .social-links-footer { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
         .social-icon-circle {
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50%;
+            width: 42px; height: 42px; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;
             display: inline-flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.1rem; text-decoration: none;
-            transition: var(--transition);
+            color: white; font-size: 1.1rem; text-decoration: none; transition: var(--transition);
         }
         .social-icon-circle:hover { background: var(--primary-main); border-color: var(--primary-main); transform: translateY(-4px); color: white; }
         .darkmode-footer-btn-pro {
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50%;
+            width: 42px; height: 42px; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 50%;
             display: inline-flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--gold-main); font-size: 1.1rem;
-            transition: var(--transition);
+            cursor: pointer; color: var(--gold-main); font-size: 1.1rem; transition: var(--transition);
         }
         .darkmode-footer-btn-pro:hover { background: var(--gold-main); color: #000; transform: rotate(18deg); }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.07);
-            padding: 20px 0; margin-top: 40px;
-        }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; margin-top: 40px; }
         .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin: 0; }
 
-        /* ===== UTILITIES ===== */
-        .sticky-sidebar { position: sticky; top: calc(var(--header-h) + 24px); }
-        @media (max-width: 991.98px) { .sticky-sidebar { position: relative; top: auto; } }
-
-        /* ===== RESPONSIVE TWEAKS ===== */
-        @media (max-width: 575.98px) {
-            .stats-row { grid-template-columns: 1fr; }
+        @media (max-width: 767.98px) {
             .title-bar { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
-            .service-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (min-width: 576px) and (max-width: 767.98px) {
-            .stats-row { grid-template-columns: 1fr 1fr 1fr; }
+            .map-container { min-height: 300px; }
+            .alert-message { bottom: 20px; right: 20px; left: 20px; }
+            .alert-message .alert { margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="top-header">
         <div class="container">
             <nav class="navbar navbar-expand-lg p-0 w-100">
@@ -588,126 +611,128 @@
                         <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="doctors.html">Chart</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- ===== HERO TITLE BAR ===== -->
     <section class="title-bar">
         <div class="container hero-inner">
-            <span class="hero-eyebrow"><i class="fas fa-heartbeat"></i> Aurora State College of Technology</span>
-            <h2>Health Services Unit</h2>
-            <p class="hero-sub">Compassionate, accessible, and student-focused healthcare at your doorstep.</p>
+            <span class="hero-eyebrow"><i class="fas fa-headset"></i> We're Here to Help</span>
+            <h2>Contact Us</h2>
+            <p class="hero-sub">Get in touch with the Health Services Unit for inquiries, appointments, or emergency assistance.</p>
         </div>
     </section>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <main class="main-section">
-        <div class="container">
-            <div class="row g-4 g-lg-5">
+    <main class="main-section container">
+        
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4>Visit Us</h4>
+                    <p>ASCOT Main Campus<br>Brgy. Zabali, Baler, Aurora<br>Philippines 3200</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <h4>Call Us</h4>
+                    <p><a href="tel:09123456789" class="fw-bold" style="font-size: 1.1rem;">0912-345-6789</a></p>
+                    <p class="small text-muted mt-2">Available Mon-Fri, 8AM-5PM</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h4>Email Us</h4>
+                    <p><a href="mailto:ascothealthservices@gmail.com">ascothealthservices@gmail.com</a></p>
+                    <p><a href="mailto:hsu@ascot.edu.ph">hsu@ascot.edu.ph</a></p>
+                </div>
+            </div>
+        </div>
 
-                <!-- LEFT COLUMN -->
-                <div class="col-lg-8">
-
-                    <!-- Hero Image -->
-                    <div class="main-image-wrapper mb-5">
-                        <img src="assets/hsu-team.png" alt="ASCOT Medical Team" onerror="this.src='https://placehold.co/1200x580/e8f5ee/006838?text=ASCOT+Health+Team'">
-                        <div class="image-overlay-badge">
-                            <i class="fas fa-shield-heart"></i> Trusted Healthcare Since Day One
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="map-card">
+                    <div class="map-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5><i class="fas fa-map-pin me-2 text-warning"></i>Our Location</h5>
+                            <p>Interactive Map - ASCOT Campus</p>
                         </div>
                     </div>
-
-                    <!-- Intro -->
-                    <div class="mb-2">
-                        <span class="section-label">Our Mission</span>
-                        <h4 class="fw-bold mb-3" style="color: var(--text-primary); font-size: clamp(1.2rem, 3vw, 1.6rem);">Quality Medical Care for ASCOTians</h4>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 640px;">Our dedicated unit provides essential health and wellness services to all students, faculty, and administrative personnel of Aurora State College of Technology. Compassionate, accessible, and student-focused healthcare at your doorstep.</p>
+                    <div class="map-container">
+                        <div id="customMap"></div>
                     </div>
-
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="contact-form-container">
+                    <h3 class="fw-bold mb-3" style="color: var(--text-primary); font-family: 'Poppins', sans-serif;">Send a Message</h3>
+                    <p class="text-muted mb-4" style="font-size: 0.95rem;">Have questions or concerns? Fill out the form below and we'll get back to you shortly.</p>
+                    
+                    <form id="contactForm">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fullName" placeholder="" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Subject <span class="text-danger">*</span></label>
+                                <select class="form-select" id="subject" required>
+                                    <option value="" disabled selected>Select Subject...</option>
+                                    <option value="Medical Concern">Medical Concern</option>
+                                    <option value="Dental Concern">Dental Concern</option>
+                                    <option value="Mental Health Support">Mental Health Support</option>
+                                    <option value="Appointment Scheduling">Appointment Scheduling</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Message <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="How can we help you today?" required></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-submit w-100">
+                                    <i class="fas fa-paper-plane me-2"></i> Submit Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 
-                        </div>
-                    </div>
-
-                    <!-- Services -->
-                    <div class="services-section">
-                        <span class="section-label">What We Offer</span>
-                        <h5 class="fw-bold mb-3" style="color: var(--text-primary);">Comprehensive Services</h5>
-                        <div class="service-grid">
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-tooth"></i></div>
-                                <span class="service-card-text">Dental Health &amp; Exams</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-laptop-medical"></i></div>
-                                <span class="service-card-text">Online Consultations</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-brain"></i></div>
-                                <span class="service-card-text">Mental Health Counseling</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-kit-medical"></i></div>
-                                <span class="service-card-text">Emergency First Aid</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-pills"></i></div>
-                                <span class="service-card-text">Medicine Dispensing</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-microscope"></i></div>
-                                <span class="service-card-text">Preventive Screenings</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-                                <span class="service-card-text">Health Education</span>
-                            </div>
-                            <div class="service-card">
-                                <div class="service-icon"><i class="fas fa-hand-holding-medical"></i></div>
-                                <span class="service-card-text">First Aid Training</span>
-                            </div>
-                        </div>
+                <div class="info-card mt-4">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h5 class="fw-bold mb-2" style="color: var(--text-primary);">Operating Hours</h5>
+                        <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Mon - Fri: <span style="color: var(--text-muted); font-weight: 400;">8:00 AM - 5:00 PM</span></p>
+                        <p class="mb-2" style="color: var(--text-primary); font-weight: 600;">Sat - Sun: <span class="text-danger" style="font-weight: 400;">Closed</span></p>
+                        <p class="small text-muted mb-0" style="line-height: 1.4;"><i class="fas fa-info-circle me-1" style="color: var(--primary-main);"></i> Emergency cases are accommodated outside regular hours via hotline.</p>
                     </div>
                 </div>
-
-                <!-- RIGHT SIDEBAR -->
-                <div class="col-lg-4">
-                    <div class="sticky-sidebar">
-                        <div class="profile-card">
-                            <div class="profile-img-wrapper">
-                                <img src="assets/gena.png" alt="Genalyn C. Gudoy" onerror="this.src='https://placehold.co/320x320/e8f5ee/006838?text=Nurse'">
-                            </div>
-                            <div class="profile-name">Genalyn C. Gudoy</div>
-                            <div class="profile-role">College Nurse II</div>
-                            <a href="mailto:ascothealthservices@gmail.com" class="contact-item">
-                                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                                <div>
-                                    <span class="contact-label">Email Address</span>
-                                    <span class="contact-value">ascothealthservices@gmail.com</span>
-                                </div>
-                            </a>
-                            <a href="tel:09123456789" class="contact-item">
-                                <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                                <div>
-                                    <span class="contact-label">Direct Line</span>
-                                    <span class="contact-value">0912-345-6789</span>
-                                </div>
-                            </a>
-                            <div class="availability-badge">
-                                <div class="availability-dot"></div>
-                                Available Mon – Fri, 8AM – 5PM
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </main>
 
-    <!-- ===== FOOTER ===== -->
+    <div id="alertMessage" class="alert-message" style="display: none;">
+        <div class="alert alert-success alert-dismissible fade show mb-0 shadow-lg" role="alert" style="border-radius: 20px; border-left: 5px solid var(--primary-main); font-weight: 500;">
+            <i class="fas fa-check-circle me-2" style="font-size: 1.2rem;"></i>
+            <span id="alertText">Thank you! Your message has been sent successfully.</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
     <footer id="footer" class="professional-footer">
         <div class="footer-wave-top">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -716,7 +741,6 @@
         </div>
         <div class="container footer-inner">
             <div class="row g-5">
-                <!-- Brand -->
                 <div class="col-lg-4 text-center text-lg-start">
                     <img src="assets/hsu_logo.png" alt="Health Services Unit Logo" class="footer-logo-transparent" onerror="this.src='https://placehold.co/180x180?text=HSU'">
                     <span class="footer-brand-large">HEALTH SERVICES UNIT</span>
@@ -730,7 +754,6 @@
                         <button id="darkmodeFooterPro" class="darkmode-footer-btn-pro ms-1"><i class="fas fa-moon"></i></button>
                     </div>
                 </div>
-                <!-- Quick Links -->
                 <div class="col-sm-6 col-lg-2 text-center text-sm-start">
                     <h5 class="footer-heading">Quick Links</h5>
                     <ul class="footer-links">
@@ -741,7 +764,6 @@
                         <li><a href="doctors.html"><i class="fas fa-angle-right"></i> Doctors</a></li>
                     </ul>
                 </div>
-                <!-- Services Links -->
                 <div class="col-sm-6 col-lg-3 text-center text-sm-start">
                     <h5 class="footer-heading">Our Services</h5>
                     <ul class="footer-links">
@@ -752,7 +774,6 @@
                         <li><a href="#"><i class="fas fa-recycle"></i> Medical Waste Management</a></li>
                     </ul>
                 </div>
-                <!-- Contact -->
                 <div class="col-lg-3 text-center text-sm-start">
                     <h5 class="footer-heading">Get in Touch</h5>
                     <div>
@@ -786,8 +807,10 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
     (function () {
+        // ===== NAV & DARK MODE LOGIC (From Index) =====
         const arrowBtn = document.getElementById('dropdownArrowBtn');
         const dropdownMenu = document.getElementById('aboutDropdownMenu');
         const parentDD = document.getElementById('aboutSplitDropdown');
@@ -848,6 +871,132 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
             icon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
         });
+
+        // ===== MAP LOGIC =====
+        function initMap() {
+            const ascotLocation = [15.7565, 121.5622];
+            
+            const map = L.map('customMap', {
+                attributionControl: false 
+            }).setView(ascotLocation, 17);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '',
+                subdomains: 'abcd',
+                maxZoom: 19,
+                minZoom: 3
+            }).addTo(map);
+            
+            const redMarkerIcon = L.divIcon({
+                className: 'custom-red-marker',
+                html: '<i class="fas fa-map-marker-alt"></i>',
+                iconSize: [30, 44],
+                iconAnchor: [15, 44],
+                popupAnchor: [0, -44]
+            });
+            
+            const popupContent = `
+                <div style="font-family: 'Inter', sans-serif; text-align: center; min-width: 260px;">
+                    <div style="background: linear-gradient(135deg, var(--primary-main), var(--primary-dark)); color: white; padding: 12px 15px; border-radius: 16px 16px 0 0; margin: -14px -20px 0 -20px;">
+                        <i class="fas fa-building"></i>
+                        <strong style="margin-left: 8px;">ASCOT Main Campus</strong>
+                    </div>
+                    <div style="padding: 14px 10px 0;">
+                        <p style="margin: 8px 0; font-weight: 700; color: var(--primary-main); font-size: 0.9rem;">
+                            <i class="fas fa-university text-danger"></i> Administration Building
+                        </p>
+                        <p style="margin: 5px 0; font-size: 12px; color: #555;">
+                            <i class="fas fa-location-dot"></i> Brgy. Zabali, Baler, Aurora<br>Philippines 3200
+                        </p>
+                        <hr style="margin: 10px 0; border-color: rgba(0,0,0,0.1);">
+                        <p style="margin: 8px 0; font-size: 12px; color: #555;">
+                            <i class="fas fa-clock" style="color: var(--primary-main);"></i> Mon-Fri: 8:00 AM - 5:00 PM<br>
+                            <i class="fas fa-phone" style="color: var(--primary-main);"></i> 0912-345-6789
+                        </p>
+                        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 16px;">
+                            <a href="https://maps.google.com/?q=15.7565,121.5622" target="_blank" style="background: var(--primary-main); color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                                <i class="fas fa-directions"></i> Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const marker = L.marker(ascotLocation, { icon: redMarkerIcon }).addTo(map);
+            marker.bindPopup(popupContent, {
+                className: 'custom-popup',
+                maxWidth: 320,
+                minWidth: 260,
+                autoPan: true,
+                closeButton: true
+            });
+            
+            setTimeout(() => { marker.openPopup(); }, 800);
+            
+            L.circle(ascotLocation, {
+                color: '#006838',
+                fillColor: '#006838',
+                fillOpacity: 0.08,
+                radius: 120,
+                weight: 2,
+                opacity: 0.4,
+                dashArray: '4, 4'
+            }).addTo(map);
+            
+            L.circleMarker(ascotLocation, {
+                radius: 4,
+                fillColor: '#e74c3c',
+                fillOpacity: 1,
+                color: '#fff',
+                weight: 2,
+                opacity: 1
+            }).addTo(map);
+        }
+
+        document.addEventListener('DOMContentLoaded', initMap);
+
+        // ===== FORM SUBMISSION LOGIC =====
+        const contactForm = document.getElementById('contactForm');
+        const alertMessage = document.getElementById('alertMessage');
+        const alertText = document.getElementById('alertText');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (!fullName || !email || !subject || !message) {
+                alertText.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Please fill in all required fields.';
+                alertMessage.querySelector('.alert').className = 'alert alert-danger alert-dismissible fade show mb-0 shadow-lg';
+                alertMessage.style.display = 'block';
+                setTimeout(() => {
+                    alertMessage.style.display = 'none';
+                    alertMessage.querySelector('.alert').className = 'alert alert-success alert-dismissible fade show mb-0 shadow-lg';
+                }, 4000);
+                return;
+            }
+            
+            // Success State
+            alertText.innerHTML = `<i class="fas fa-check-circle me-2"></i>Thank you, <strong>${fullName}</strong>! Your message has been sent successfully. We'll get back to you soon.`;
+            alertMessage.querySelector('.alert').className = 'alert alert-success alert-dismissible fade show mb-0 shadow-lg';
+            alertMessage.style.display = 'block';
+            
+            contactForm.reset();
+            
+            setTimeout(() => {
+                alertMessage.style.display = 'none';
+            }, 6000);
+        });
+        
+        document.querySelectorAll('.btn-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alertMessage.style.display = 'none';
+            });
+        });
+
     })();
     </script>
 </body>

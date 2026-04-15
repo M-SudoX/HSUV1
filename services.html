@@ -5,50 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Services | Health Services Unit | ASCOT</title>
     
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
+        /* ===== EXACT ROOT VARIABLES FROM INDEX ===== */
         :root {
-            --primary-dark: #013219; 
+            --primary-dark: #013219;
             --primary-main: #006838;
-            --primary-accent: #2c8c56; 
+            --primary-accent: #2c8c56;
             --gold-main: #fce268;
             --gold-soft: #fff9e6;
-            --slate-700: #334155;
-            --slate-500: #64748b;
             --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05);
             --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.08);
             --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
-            --transition: all 0.3s ease-in-out;
-            
-            /* Light mode (default) */
-            --bg-body: #fcfcfc;
+            --shadow-3d: 0 25px 40px -12px rgba(0,0,0,0.22), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-3d-hover: 0 32px 52px -14px rgba(0,0,0,0.28);
+            --transition: all 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --bg-body: #f0f4f8;
             --bg-card: #ffffff;
-            --bg-header: rgba(255, 255, 255, 0.96);
-            --text-primary: #334155;
-            --text-muted: #64748b;
-            --border-light: rgba(0,0,0,0.05);
-            --footer-bg: #1a1e2b;
-            --footer-text: rgba(255,255,255,0.75);
+            --bg-header: rgba(255,255,255,0.97);
+            --text-primary: #1a2536;
+            --text-muted: #52637a;
+            --border-light: rgba(0,0,0,0.07);
+            --footer-bg: #0a1120;
+            --footer-text: rgba(255,255,255,0.72);
             --dropdown-bg: #ffffff;
+            --header-h: 80px;
         }
-        
-        /* Dark mode variables */
         body.dark-mode {
-            --bg-body: #121212;
-            --bg-card: #1e1e2a;
-            --bg-header: rgba(18, 18, 24, 0.96);
-            --text-primary: #e2e8f0;
-            --text-muted: #94a3b8;
+            --bg-body: #080c14;
+            --bg-card: #161c28;
+            --bg-header: rgba(8,12,20,0.97);
+            --text-primary: #dde5f0;
+            --text-muted: #8fa0bb;
             --border-light: rgba(255,255,255,0.08);
-            --footer-bg: #0a0c15;
-            --footer-text: rgba(255,255,255,0.7);
-            --dropdown-bg: #252532;
+            --footer-bg: #030509;
+            --footer-text: rgba(255,255,255,0.68);
+            --dropdown-bg: #1e2535;
             background-color: var(--bg-body);
         }
-        
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-primary);
@@ -57,194 +57,393 @@
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.2s ease;
         }
-        
-        /* Dark mode component overrides */
-        body.dark-mode .service-list li {
-            background-color: var(--bg-card);
-            color: var(--text-primary);
-            border-color: var(--border-light);
-        }
-        body.dark-mode .top-header {
-            background: var(--bg-header);
-            backdrop-filter: blur(12px);
-            border-bottom-color: var(--border-light);
-        }
-        body.dark-mode .nav-link, 
-        body.dark-mode .about-main-link {
-            color: var(--text-primary) !important;
-        }
-        body.dark-mode .dropdown-menu-custom {
-            background: var(--dropdown-bg);
-            border-color: var(--border-light);
-        }
-        body.dark-mode .dropdown-item-custom {
-            color: var(--text-primary);
-        }
-        body.dark-mode .dropdown-item-custom:hover {
-            background-color: rgba(252,226,104,0.12);
-        }
+        h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; letter-spacing: -0.02em; }
 
-        h1, h2, h3, h4, h5, h6, .nav-link { 
-            font-family: 'Poppins', sans-serif; 
-        }
-
-        /* --- Header & Navigation --- */
+        /* ===== HEADER (EXACTLY FROM INDEX) ===== */
         .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 1040;
             background: var(--bg-header);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 6px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-light);
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
             transition: var(--transition);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
-        
-        .masthead-logo { 
-            max-height: clamp(50px, 8vw, 80px); 
-            width: auto; 
-            transition: var(--transition); 
+        .top-header .container { width: 100%; }
+        .top-header nav { display: flex; align-items: center; width: 100%; padding: 0; }
+        .masthead-logo {
+            max-height: clamp(46px, 7vw, 68px);
+            width: auto;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+            transition: var(--transition);
         }
+        .masthead-logo:hover { transform: scale(1.05); }
+        .navbar-brand { padding: 0; }
 
         @media (min-width: 992px) {
+            .navbar-collapse { display: flex !important; align-items: center; justify-content: flex-end; flex: 1; }
+            .navbar-nav { flex-direction: row; align-items: center; gap: 4px; }
+            .nav-item { position: relative; }
             .nav-link {
-                color: var(--slate-700) !important;
+                color: var(--text-primary) !important;
+                font-family: 'Poppins', sans-serif;
                 font-weight: 600;
-                font-size: 0.85rem;
+                font-size: 0.78rem;
                 text-transform: uppercase;
-                letter-spacing: 0.04em;
-                padding: 10px 16px !important;
-                position: relative;
+                letter-spacing: 0.06em;
+                padding: 9px 16px !important;
+                border-radius: 50px;
                 transition: var(--transition);
+                position: relative;
+                white-space: nowrap;
             }
-            .nav-link:hover, .nav-link.active { color: var(--primary-main) !important; }
-            .nav-link::after {
-                content: ''; position: absolute; width: 0; height: 2px;
-                bottom: 5px; left: 16px; background: var(--primary-main);
-                transition: var(--transition); border-radius: 2px;
+            .nav-link:hover, .nav-link.active {
+                color: var(--primary-main) !important;
+                background: rgba(0,104,56,0.07);
             }
-            .nav-link:hover::after, .nav-link.active::after { width: calc(100% - 32px); }
         }
-        
-        .nav-item.custom-dropdown { position: relative; }
-        .split-dropdown-wrapper { display: flex; align-items: center; margin: 0; padding: 0; gap: 0; }
-        
+        @media (max-width: 991.98px) {
+            .navbar-toggler {
+                border: none;
+                background: rgba(0,104,56,0.09);
+                border-radius: 16px;
+                width: 46px; height: 46px;
+                display: flex; flex-direction: column;
+                justify-content: center; align-items: center; gap: 5px;
+                padding: 0; margin-left: auto;
+            }
+            .hamburger-line { width: 22px; height: 2px; background: var(--primary-dark); border-radius: 4px; transition: all 0.25s; }
+            .navbar-collapse {
+                background: var(--bg-card);
+                border-radius: 28px;
+                box-shadow: var(--shadow-lg);
+                margin-top: 14px;
+                padding: 1.5rem 1.2rem;
+                border: 1px solid var(--border-light);
+            }
+            .nav-link { color: var(--text-primary) !important; font-size: 0.95rem; padding: 11px 14px !important; border-radius: 18px; font-weight: 600; }
+            .nav-link:hover { background: rgba(0,104,56,0.06); color: var(--primary-main) !important; }
+        }
+
+        /* Split Dropdown */
+        .custom-dropdown { position: relative; }
+        .split-dropdown-wrapper { display: flex; align-items: center; gap: 0; }
         .about-main-link {
-            color: var(--slate-700) !important; font-weight: 600; font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 6px 10px 16px !important;
-            position: relative; transition: var(--transition); text-decoration: none;
-            display: inline-block; font-family: 'Poppins', sans-serif; border-radius: 40px;
+            color: var(--text-primary) !important;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 9px 4px 9px 16px !important;
+            border-radius: 50px 0 0 50px;
+            transition: var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
         }
-        .about-main-link:hover, .about-main-link.active { color: var(--primary-main) !important; }
-        
+        .about-main-link:hover { color: var(--primary-main) !important; background: rgba(0,104,56,0.07); }
+        .dropdown-arrow-btn {
+            background: transparent; border: none;
+            padding: 9px 16px 9px 4px;
+            cursor: pointer; color: var(--primary-main);
+            border-radius: 0 50px 50px 0;
+            transition: var(--transition);
+        }
+        .dropdown-arrow-btn i { font-size: 0.7rem; transition: transform 0.25s; }
+        .custom-dropdown.show .dropdown-arrow-btn i { transform: rotate(180deg); }
         @media (min-width: 992px) {
-            .about-main-link::after {
-                content: ''; position: absolute; width: 0; height: 2px;
-                bottom: 5px; left: 16px; background: var(--primary-main);
-                transition: var(--transition); border-radius: 2px;
-            }
-            .about-main-link:hover::after, .about-main-link.active::after { width: calc(100% - 32px); }
-            
             .dropdown-menu-custom {
-                position: absolute; top: 100%; left: 0; z-index: 1000;
-                display: block; opacity: 0; visibility: hidden;
-                transform: translateY(20px); transition: opacity 0.25s ease, visibility 0.25s, transform 0.25s;
-                border: none !important; border-top: 3px solid var(--primary-main) !important;
-                border-radius: 0 0 20px 20px !important; background: var(--dropdown-bg);
-                padding: 12px 8px !important; min-width: 260px; box-shadow: var(--shadow-lg) !important;
-                margin-top: 8px; list-style: none;
+                position: absolute; top: calc(100% + 8px); left: 0; z-index: 2000;
+                opacity: 0; visibility: hidden; transform: translateY(14px);
+                transition: opacity 0.22s, visibility 0.22s, transform 0.22s;
+                border: none !important;
+                border-top: 3px solid var(--primary-main) !important;
+                border-radius: 0 0 22px 22px !important;
+                background: var(--dropdown-bg);
+                padding: 10px 8px !important;
+                min-width: 250px;
+                box-shadow: var(--shadow-lg) !important;
             }
             .dropdown-menu-custom.show { opacity: 1; visibility: visible; transform: translateY(0); }
         }
-        
-        .dropdown-arrow-btn {
-            background: transparent; border: none; padding: 10px 16px 10px 4px;
-            cursor: pointer; font-size: 0.75rem; color: var(--primary-main);
-            transition: var(--transition); display: flex; align-items: center;
-            justify-content: center; border-radius: 40px;
-        }
-        .dropdown-arrow-btn i { font-size: 0.75rem; transition: transform 0.25s ease; pointer-events: none; }
-        .custom-dropdown.show .dropdown-arrow-btn i { transform: rotate(180deg); }
-        
         @media (max-width: 991.98px) {
-            .navbar-toggler {
-                border: none; padding: 8px 10px; background: rgba(0,104,56,0.06);
-                border-radius: 12px; transition: var(--transition); display: flex;
-                flex-direction: column; justify-content: center; align-items: center;
-                gap: 5px; width: 44px; height: 44px; cursor: pointer;
+            .dropdown-menu-custom {
+                position: static !important; width: 100%;
+                background: rgba(0,0,0,0.025);
+                border-left: 3px solid var(--primary-accent) !important;
+                border-radius: 0 18px 18px 0 !important;
+                padding: 6px 0 !important;
+                margin-top: 6px;
+                display: none;
             }
-            .hamburger-line { width: 24px; height: 2px; background-color: var(--primary-dark); border-radius: 4px; transition: all 0.25s ease; }
-            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(2) { opacity: 0; }
-            .navbar-toggler[aria-expanded="true"] .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-            .navbar-collapse { background: var(--bg-card); padding: 1.8rem 1.5rem; border-radius: 28px; box-shadow: var(--shadow-lg); margin-top: 18px; border: 1px solid var(--border-light); }
-            .nav-link { color: var(--text-primary) !important; font-weight: 600; font-size: 1rem; text-transform: uppercase; padding: 12px 16px !important; border-radius: 16px; }
-            .dropdown-menu-custom { display: none; position: static !important; width: 100%; background: rgba(0,0,0,0.02); border-left: 3px solid var(--primary-accent) !important; padding: 8px 0 !important; margin-top: 8px; transform: none !important; opacity: 1 !important; }
             .dropdown-menu-custom.show { display: block; }
         }
-
-        .dropdown-item-custom { display: flex; align-items: center; gap: 12px; padding: 10px 18px; font-weight: 500; font-size: 0.9rem; color: var(--text-primary); transition: var(--transition); text-decoration: none; border-radius: 12px; }
-        .dropdown-item-custom i { width: 24px; font-size: 0.9rem; color: var(--primary-accent); }
-        .dropdown-item-custom:hover { background-color: var(--gold-soft); color: var(--primary-main); transform: translateX(5px); }
-        .dropdown-divider-custom { margin: 8px 12px; height: 1px; background-color: rgba(0,0,0,0.08); }
-
-        /* --- Title Bar --- */
-        .title-bar {
-            background: linear-gradient(125deg, var(--primary-dark) 0%, var(--primary-main) 100%);
-            padding: clamp(40px, 8vw, 70px) 0; color: white; position: relative; overflow: hidden;
+        .dropdown-item-custom {
+            display: flex; align-items: center; gap: 11px;
+            padding: 10px 16px;
+            font-weight: 500; font-size: 0.88rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 13px;
+            transition: var(--transition);
         }
-        .title-bar h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin: 0; letter-spacing: -0.5px; position: relative; z-index: 2; }
-        .title-bar p { font-size: 1rem; opacity: 0.9; margin-top: 12px; }
+        .dropdown-item-custom i { width: 22px; color: var(--primary-accent); font-size: 0.85rem; }
+        .dropdown-item-custom:hover { background: var(--gold-soft); color: var(--primary-main); transform: translateX(4px); }
+        body.dark-mode .dropdown-item-custom:hover { background: rgba(252,226,104,0.12); }
+        body.dark-mode .dropdown-menu-custom { background: var(--dropdown-bg); border-color: var(--border-light); }
+        body.dark-mode .about-main-link, body.dark-mode .nav-link { color: var(--text-primary) !important; }
+        body.dark-mode .navbar-collapse { background: var(--bg-card); border-color: var(--border-light); }
 
-        /* --- Services Content --- */
-        .service-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; padding: 0; list-style: none; }
-        .service-list li { background: var(--bg-card); padding: 18px 18px 18px 55px; border-radius: 20px; font-weight: 600; font-size: 0.95rem; position: relative; box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); transition: var(--transition); color: var(--text-primary); }
-        .service-list li:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--gold-soft); }
-        .service-list li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--primary-main); background: var(--gold-soft); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 14px; font-size: 0.75rem; }
+        /* ===== TITLE BAR (EXACTLY FROM INDEX) ===== */
+        .title-bar {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #015a30 55%, var(--primary-main) 100%);
+            padding: clamp(56px, 10vw, 100px) 0 clamp(64px, 11vw, 112px);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%);
+            text-align: center;
+        }
+        .title-bar::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .title-bar::after {
+            content: '';
+            position: absolute;
+            top: -60%; right: -8%;
+            width: 520px; height: 520px;
+            background: radial-gradient(circle, rgba(252,226,104,0.12) 0%, rgba(252,226,104,0) 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .title-bar .hero-inner { position: relative; z-index: 2; }
+        .title-bar .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(252,226,104,0.18);
+            border: 1px solid rgba(252,226,104,0.35);
+            color: var(--gold-main);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 18px;
+        }
+        .title-bar h2 {
+            font-size: clamp(2rem, 5.5vw, 4rem);
+            font-weight: 900;
+            margin: 0;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+        .title-bar .hero-sub {
+            margin-top: 12px;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.75;
+            font-weight: 400;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-        /* --- Footer --- */
-        .footer-chevron-container { position: relative; height: clamp(100px, 15vw, 180px); background: var(--bg-body); }
-        .chevron-bg { position: absolute; top: 0; width: 100%; height: 100%; background: var(--gold-main); clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%); }
-        .chevron-inner { position: absolute; top: 0; width: 100%; height: 80%; background: var(--primary-accent); clip-path: polygon(0 0, 100% 0, 100% 40%, 50% 100%, 0 40%); }
-        .footer-center-logo { position: absolute; left: 50%; bottom: -60px; transform: translateX(-50%); width: clamp(180px, 20vw, 280px); z-index: 5; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25)); border-radius: 80px; padding: 10px; }
-        .footer-brand-text { font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 900; letter-spacing: clamp(1px, 0.5vw, 4px); line-height: 1.4; margin-bottom: 5px; background: linear-gradient(to bottom, #ffffff, #e0e0e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-contact-link { color: var(--footer-text) !important; text-decoration: none; transition: var(--transition); display: inline-block; }
-        .footer-contact-link:hover { color: var(--gold-main) !important; transform: translateX(3px); }
-        .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 60px; transition: var(--transition); font-size: 1.3rem; }
-        .social-btn:hover { background: var(--primary-main); color: white !important; transform: translateY(-4px); }
-        .darkmode-footer-btn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); width: 42px; height: 42px; border-radius: 40px; display: inline-flex; align-items: center; justify-content: center; transition: var(--transition); cursor: pointer; color: #ffffff; font-size: 1.2rem; margin-top: 12px; backdrop-filter: blur(4px); }
-        .darkmode-footer-btn:hover { background: var(--gold-main); border-color: var(--gold-main); color: #1a1e2b; transform: translateY(-3px); }
-        .quick-links-wrapper { display: flex; flex-direction: column; align-items: flex-start; }
+        /* ===== SERVICES SPECIFIC STYLES ===== */
+        .main-section { padding: clamp(40px, 6vw, 80px) 0; }
 
-        @media (max-width: 768px) {
-            .darkmode-footer-btn { align-self: center; }
-            .quick-links-wrapper { align-items: center; text-align: center; }
-            .service-list li { font-size: 0.85rem; padding: 14px 14px 14px 50px; }
-            .service-list li::before { width: 24px; height: 24px; font-size: 0.65rem; left: 16px; }
+        .service-category { margin-top: 48px; margin-bottom: 24px; }
+        .service-category:first-of-type { margin-top: 0; }
+        
+        .category-title {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+            margin-bottom: 0;
+        }
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-main);
+            border-radius: 3px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 28px 24px 28px 68px;
+            border-radius: 28px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            position: relative;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-3d-hover);
+            border-color: rgba(0,104,56,0.3);
+        }
+        body.dark-mode .service-card { background: var(--bg-card); border-color: var(--border-light); }
+        
+        .service-card::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-main);
+            background: rgba(0,104,56,0.08);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        body.dark-mode .service-card::before { background: rgba(252,226,104,0.15); color: var(--gold-main); }
+        .service-card:hover::before {
+            background: var(--primary-main);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, rgba(0,104,56,0.05) 0%, rgba(0,104,56,0.12) 100%);
+            border: 1px solid rgba(0,104,56,0.15);
+            border-radius: 32px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        body.dark-mode .info-banner {
+            background: linear-gradient(135deg, rgba(252,226,104,0.05) 0%, rgba(252,226,104,0.12) 100%);
+            border-color: rgba(252,226,104,0.15);
+        }
+
+        /* ===== FOOTER (EXACTLY FROM INDEX) ===== */
+        .professional-footer {
+            background: var(--footer-bg);
+            margin-top: 80px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+        }
+        .footer-wave-top {
+            position: absolute; top: -40px; left: 0; width: 100%; overflow: hidden; line-height: 0;
+        }
+        .footer-wave-top svg { display: block; width: calc(100% + 1.3px); height: 40px; }
+        .footer-inner { padding: clamp(48px, 8vw, 80px) 0 clamp(28px, 4vw, 44px); }
+        .footer-brand-large {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--gold-main));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px; line-height: 1.2;
+            display: block; margin-top: 14px;
+        }
+        .footer-logo-transparent {
+            max-width: clamp(110px, 14vw, 180px); opacity: 0.7; transition: var(--transition); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+        }
+        .footer-logo-transparent:hover { opacity: 0.9; transform: scale(1.03); }
+        .footer-heading {
+            font-size: 0.95rem; font-weight: 800; letter-spacing: 0.04em; color: #fff;
+            position: relative; display: inline-block; padding-bottom: 12px; margin-bottom: 20px;
+        }
+        .footer-heading::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 3px;
+            background: var(--gold-main); border-radius: 3px;
+        }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            color: var(--footer-text); text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.88rem; transition: var(--transition);
+        }
+        .footer-links a i { width: 18px; font-size: 0.8rem; transition: var(--transition); }
+        .footer-links a:hover { color: var(--gold-main); transform: translateX(5px); }
+        .footer-contact-item {
+            display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;
+            font-size: 0.88rem; color: var(--footer-text); line-height: 1.5;
+        }
+        .footer-contact-item i { color: var(--gold-main); font-size: 1rem; width: 20px; margin-top: 2px; flex-shrink: 0; }
+        .footer-contact-item a { color: var(--footer-text); text-decoration: none; transition: var(--transition); }
+        .footer-contact-item a:hover { color: var(--gold-main); }
+        .social-links-footer { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+        .social-icon-circle {
+            width: 42px; height: 42px; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.1rem; text-decoration: none; transition: var(--transition);
+        }
+        .social-icon-circle:hover { background: var(--primary-main); border-color: var(--primary-main); transform: translateY(-4px); color: white; }
+        .darkmode-footer-btn-pro {
+            width: 42px; height: 42px; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--gold-main); font-size: 1.1rem; transition: var(--transition);
+        }
+        .darkmode-footer-btn-pro:hover { background: var(--gold-main); color: #000; transform: rotate(18deg); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; margin-top: 40px; }
+        .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin: 0; }
+
+        @media (max-width: 575.98px) {
+            .title-bar { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
+            .services-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header class="top-header sticky-top">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand p-0" href="index.html">
-                    <img src="assets/logo2.png" alt="ASCOT Logo" class="masthead-logo" onerror="this.src='https://placehold.co/80x80?text=ASCOT'">
+    <header class="top-header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg p-0 w-100">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/logo.png" alt="ASCOT Logo" class="masthead-logo" onerror="this.src='https://placehold.co/68x68?text=ASCOT'">
                 </a>
-                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>
-                
-                <div class="collapse navbar-collapse justify-content-end" id="mainNav">
-                    <ul class="navbar-nav align-items-lg-center">
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                         <li class="nav-item custom-dropdown" id="aboutSplitDropdown">
                             <div class="split-dropdown-wrapper">
                                 <a class="about-main-link" href="about.html">About Us</a>
-                                <button class="dropdown-arrow-btn" id="dropdownArrowBtn" aria-label="Toggle dropdown menu">
+                                <button class="dropdown-arrow-btn" id="dropdownArrowBtn" aria-label="Toggle dropdown">
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
                             </div>
@@ -252,163 +451,214 @@
                                 <li><a class="dropdown-item-custom" href="about.html#clinic"><i class="fas fa-clinic-medical"></i> College Clinic</a></li>
                                 <li><a class="dropdown-item-custom" href="about.html#schedule"><i class="far fa-calendar-alt"></i> Doctor's Schedule</a></li>
                                 <li><a class="dropdown-item-custom" href="about.html#objectives"><i class="fas fa-bullseye"></i> Specific Objectives</a></li>
-                                <li><div class="dropdown-divider-custom"></div></li>
-                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision & Mission</a></li>
+                                <li><hr style="border-color: var(--border-light); margin: 6px 12px;"></li>
+                                <li><a class="dropdown-item-custom" href="about.html#vision-mission"><i class="fas fa-eye"></i> Vision &amp; Mission</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link active" href="services.html">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact-footer">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="doctors.html">Chart</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
     <section class="title-bar">
-        <div class="container">
-            <h2>SERVICES OFFERED</h2>
-            <p>The Health Services Unit offers the following:</p>
+        <div class="container hero-inner">
+            <span class="hero-eyebrow"><i class="fas fa-hand-holding-medical"></i> What We Do</span>
+            <h2>Services Offered</h2>
+            <p class="hero-sub">The Health Services Unit provides comprehensive healthcare services for the ASCOT community.</p>
         </div>
     </section>
 
-    <main class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <ul class="service-list">
-                    <li>Medical and Dental Examination</li>
-                    <li>Referral to College Doctor/hospital if needed</li>
-                    <li>Respond to Accident and Medical Emergencies</li>
-                    <li>First Aid Treatment to minor injuries</li>
-                    <li>Daily Weight Monitoring</li>
-                    <li>Dispense Free Medication</li>
-                    <li>Free Random Blood Sugar Testing</li>
-                    <li>Infection Control and prevention of various illnesses</li>
-                    <li>Environmental Hygiene</li>
-                    <li>Immunization</li>
-                    <li>Allergy Management</li>
-                    <li>Medical and Hazardous Waste Management</li>
-                </ul>
+    <main class="main-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    
+                    <div class="service-category">
+                        <h3 class="category-title">🏥 Primary &amp; Emergency Care</h3>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-card">Medical and Dental Examination</div>
+                        <div class="service-card">Referral to College Doctor/hospital if needed</div>
+                        <div class="service-card">Respond to Accident and Medical Emergencies</div>
+                        <div class="service-card">First Aid Treatment to minor injuries</div>
+                    </div>
+
+                    <div class="service-category">
+                        <h3 class="category-title">🛡️ Preventive &amp; Wellness</h3>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-card">Daily Weight Monitoring</div>
+                        <div class="service-card">Dispense Free Medication</div>
+                        <div class="service-card">Free Random Blood Sugar Testing</div>
+                        <div class="service-card">Infection Control and prevention of various illnesses</div>
+                        <div class="service-card">Immunization</div>
+                        <div class="service-card">Allergy Management</div>
+                    </div>
+
+                    <div class="service-category">
+                        <h3 class="category-title">🌿 Environmental &amp; Safety</h3>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-card">Environmental Hygiene</div>
+                        <div class="service-card">Medical and Hazardous Waste Management</div>
+                    </div>
+
+                    <div class="info-banner">
+                        <i class="fas fa-heartbeat fa-2x mb-3" style="color: var(--primary-main);"></i>
+                        <h4 class="fw-bold mb-3" style="color: var(--text-primary);">Your Health is Our Priority</h4>
+                        <p class="mb-0" style="color: var(--text-muted); font-size: 0.95rem;">All services are provided free of charge to currently enrolled students and faculty members. For inquiries, please visit the Health Services Unit or contact us directly.</p>
+                    </div>
+
+                </div>
             </div>
         </div>
     </main>
 
-    <footer id="contact-footer" class="bg-dark text-white-50 mt-5" style="background-color: var(--footer-bg) !important;">
-        <div class="footer-chevron-container">
-            <div class="chevron-bg"></div>
-            <div class="chevron-inner"></div>
-            <img src="assets/hsu_logo.png" class="footer-center-logo" alt="ASCOT" onerror="this.src='https://placehold.co/140x140?text=HSU'">
+    <footer id="footer" class="professional-footer">
+        <div class="footer-wave-top">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="var(--primary-main)" opacity="0.9"></path>
+            </svg>
         </div>
-
-        <div class="container py-5 mt-4">
-            <div class="row g-4 text-center">
-                <div class="col-12 mb-3 mt-4 mt-md-0">
-                    <h1 class="footer-brand-text mb-0">AURORA STATE COLLEGE OF TECHNOLOGY</h1>
-                    <p class="text-warning fw-bold text-uppercase mb-4" style="letter-spacing: 2px;">Health Services Unit</p>
-                </div>
-            </div>
-
-            <div class="row g-4 text-center text-md-start pt-4">
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <div class="quick-links-wrapper">
-                        <h6 class="text-white fw-bold text-uppercase mb-3">Quick Links</h6>
-                        <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="index.html" class="footer-contact-link"><i class="fas fa-home me-2"></i>Home</a></li>
-                            <li class="mb-2"><a href="about.html" class="footer-contact-link"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
-                            <li class="mb-2"><a href="#" class="footer-contact-link"><i class="fas fa-blog me-2"></i>Blogs</a></li>
-                            <li class="mb-2"><a href="services.html" class="footer-contact-link"><i class="fas fa-stethoscope me-2"></i>Services</a></li>
-                            <li class="mb-2"><a href="doctors.html" class="footer-contact-link"><i class="fas fa-user-md me-2"></i>Doctors</a></li>
-                            <li class="mb-2"><a href="#contact-footer" class="footer-contact-link"><i class="fas fa-envelope me-2"></i>Contact</a></li>
-                        </ul>
-                        <button id="darkmodeFooterToggle" class="darkmode-footer-btn" aria-label="Dark mode">
-                            <i class="fas fa-moon"></i>
-                        </button>
+        <div class="container footer-inner">
+            <div class="row g-5">
+                <div class="col-lg-4 text-center text-lg-start">
+                    <img src="assets/hsu_logo.png" alt="Health Services Unit Logo" class="footer-logo-transparent" onerror="this.src='https://placehold.co/180x180?text=HSU'">
+                    <span class="footer-brand-large">HEALTH SERVICES UNIT</span>
+                    <p class="mt-3" style="color: rgba(255,255,255,0.48); font-size: 0.86rem; max-width: 290px; margin: 12px auto 0; line-height: 1.65;">
+                        Committed to excellence in student healthcare and wellness promotion across Aurora State College of Technology.
+                    </p>
+                    <div class="social-links-footer justify-content-center justify-content-lg-start">
+                        <a href="https://www.facebook.com/ascotclinic" target="_blank" class="social-icon-circle"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon-circle"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon-circle"><i class="fab fa-linkedin-in"></i></a>
+                        <button id="darkmodeFooterPro" class="darkmode-footer-btn-pro ms-1"><i class="fas fa-moon"></i></button>
                     </div>
                 </div>
-                
-                <div class="col-md-4 text-center mb-4 mb-md-0">
-                    <h6 class="text-white fw-bold text-uppercase mb-3">Connect with us</h6>
-                    <a href="https://www.facebook.com/ascotclinic" target="_blank" class="text-white fs-5 social-btn">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
+                <div class="col-sm-6 col-lg-2 text-center text-sm-start">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-angle-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-angle-right"></i> About Us</a></li>
+                        <li><a href="blogs.html"><i class="fas fa-angle-right"></i> Blogs</a></li>
+                        <li><a href="services.html"><i class="fas fa-angle-right"></i> Services</a></li>
+                        <li><a href="doctors.html"><i class="fas fa-angle-right"></i> Doctors</a></li>
+                    </ul>
                 </div>
-                
-                <div class="col-md-4 text-center text-md-end">
-                    <h6 class="text-white fw-bold text-uppercase mb-3">Contact Details</h6>
-                    <p class="small mb-2">
-                        <a href="mailto:ascothealthservices@gmail.com" class="footer-contact-link">
-                            <i class="fas fa-envelope me-2"></i>ascothealthservices@gmail.com
-                        </a>
-                    </p>
-                    <p class="small mb-0">
-                        <a href="tel:09123456789" class="footer-contact-link">
-                            <i class="fas fa-phone-alt me-2"></i>0912-345-6789
-                        </a>
-                    </p>
+                <div class="col-sm-6 col-lg-3 text-center text-sm-start">
+                    <h5 class="footer-heading">Our Services</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-tooth"></i> Medical and Dental Examination</a></li>
+                        <li><a href="#"><i class="fas fa-kit-medical"></i> First Aid Treatment</a></li>
+                        <li><a href="#"><i class="fas fa-truck-medical"></i> Emergency Response</a></li>
+                        <li><a href="#"><i class="fas fa-vial"></i> Referral to College Doctor</a></li>
+                        <li><a href="#"><i class="fas fa-recycle"></i> Medical Waste Management</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 text-center text-sm-start">
+                    <h5 class="footer-heading">Get in Touch</h5>
+                    <div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>ASCOT Main Campus, Brgy. Zabali, Baler, Aurora, Philippines 3200</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:ascothealthservices@gmail.com">ascothealthservices@gmail.com</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:09123456789">0912-345-6789</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon – Fri: 8:00 AM – 5:00 PM</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="border-top border-secondary mt-5 pt-4 text-center">
-                <p class="small mb-0 text-white-50">&copy; 2026 Health Services Unit, ASCOT. All Rights Reserved.</p>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-12 text-center">
+                        <p>&copy; 2026 Health Services Unit, Aurora State College of Technology. All rights reserved.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        (function() {
-            const arrowBtn = document.getElementById('dropdownArrowBtn');
-            const dropdownMenu = document.getElementById('aboutDropdownMenu');
-            const parentDropdown = document.getElementById('aboutSplitDropdown');
-            const navbarCollapse = document.getElementById('mainNav');
-            
-            function closeAboutDropdown() {
-                if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+    (function () {
+        // ===== NAV & DARK MODE LOGIC (From Index) =====
+        const arrowBtn = document.getElementById('dropdownArrowBtn');
+        const dropdownMenu = document.getElementById('aboutDropdownMenu');
+        const parentDD = document.getElementById('aboutSplitDropdown');
+        const navbarCollapse = document.getElementById('mainNav');
+
+        function closeAboutDD() {
+            if (dropdownMenu && dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+                if (parentDD) parentDD.classList.remove('show');
+                if (arrowBtn) arrowBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        if (arrowBtn && dropdownMenu) {
+            arrowBtn.addEventListener('click', function (e) {
+                e.preventDefault(); e.stopPropagation();
+                const open = dropdownMenu.classList.contains('show');
+                if (open) {
                     dropdownMenu.classList.remove('show');
-                    if (parentDropdown) parentDropdown.classList.remove('show');
+                    if (parentDD) parentDD.classList.remove('show');
+                    arrowBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    dropdownMenu.classList.add('show');
+                    if (parentDD) parentDD.classList.add('show');
+                    arrowBtn.setAttribute('aria-expanded', 'true');
                 }
-            }
+            });
+        }
 
-            if (arrowBtn && dropdownMenu) {
-                arrowBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const isExpanded = dropdownMenu.classList.contains('show');
-                    if (isExpanded) {
-                        dropdownMenu.classList.remove('show');
-                        if (parentDropdown) parentDropdown.classList.remove('show');
-                    } else {
-                        dropdownMenu.classList.add('show');
-                        if (parentDropdown) parentDropdown.classList.add('show');
+        document.addEventListener('click', function (e) {
+            if (parentDD && !parentDD.contains(e.target)) closeAboutDD();
+        });
+
+        document.querySelectorAll('.nav-link, .about-main-link, .dropdown-item-custom').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (window.innerWidth < 992) {
+                    const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
+                    if (bsc && navbarCollapse.classList.contains('show')) {
+                        setTimeout(function () { bsc.hide(); }, 50);
                     }
-                });
-            }
-
-            document.addEventListener('click', function(event) {
-                if (parentDropdown && !parentDropdown.contains(event.target)) {
-                    closeAboutDropdown();
                 }
+                closeAboutDD();
             });
+        });
 
-            // DARK MODE LOGIC
-            const darkToggleFooter = document.getElementById('darkmodeFooterToggle');
-            const body = document.body;
-            const footerIcon = darkToggleFooter.querySelector('i');
-            
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                body.classList.add('dark-mode');
-                footerIcon.classList.replace('fa-moon', 'fa-sun');
-            }
-            
-            darkToggleFooter.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                const isDark = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-                footerIcon.classList.toggle('fa-moon', !isDark);
-                footerIcon.classList.toggle('fa-sun', isDark);
-            });
-        })();
+        const darkToggle = document.getElementById('darkmodeFooterPro');
+        const body = document.body;
+        const icon = darkToggle.querySelector('i');
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        darkToggle.addEventListener('click', function () {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            icon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
+        });
+
+    })();
     </script>
 </body>
 </html>
