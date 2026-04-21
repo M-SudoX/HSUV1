@@ -489,7 +489,7 @@
             box-shadow: 0 12px 24px rgba(0,104,56,0.3);
         }
 
-        /* Info Cards - Operating Hours */
+        /* Info Cards - Operating Hours (UPDATED: Tue-Fri) */
         .info-card {
             background: linear-gradient(135deg, rgba(0,104,56,0.05) 0%, rgba(0,104,56,0.01) 100%);
             border-radius: 28px;
@@ -668,7 +668,7 @@
                     <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                     <h4>Call Us</h4>
                     <p><a href="tel:09123456789" class="fw-bold" style="font-size: 1.1rem;">0912-345-6789</a></p>
-                    <p class="small text-muted mt-2">Available Mon-Fri, 8AM-5PM</p>
+                    <p class="small text-muted mt-2">Available Tue-Fri, 8AM-5PM</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -739,6 +739,7 @@
                     </form>
                 </div>
                 
+                <!-- UPDATED Operating Hours: Tue-Fri, Mon & Sat-Sun Closed -->
                 <div class="info-card mt-4">
                     <div class="info-icon"><i class="fas fa-clock"></i></div>
                     <div class="w-100">
@@ -746,8 +747,8 @@
                             <h5 class="fw-bold mb-0" style="color: var(--text-primary);">Operating Hours</h5>
                             <span id="officeStatusBadge" class="badge rounded-pill px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;"></span>
                         </div>
-                        <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Mon - Fri: <span style="color: var(--text-muted); font-weight: 400;">8:00 AM - 5:00 PM</span></p>
-                        <p class="mb-2" style="color: var(--text-primary); font-weight: 600;">Sat - Sun: <span class="text-danger" style="font-weight: 400;">Closed</span></p>
+                        <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Tue - Fri: <span style="color: var(--text-muted); font-weight: 400;">8:00 AM - 5:00 PM</span></p>
+                        <p class="mb-2" style="color: var(--text-primary); font-weight: 600;">Mon - Sat - Sun: <span class="text-danger" style="font-weight: 400;">Closed</span></p>
                         <p class="small text-muted mb-0" style="line-height: 1.4;"><i class="fas fa-info-circle me-1" style="color: var(--primary-main);"></i> Emergency cases are accommodated outside regular hours via hotline.</p>
                     </div>
                 </div>
@@ -819,7 +820,7 @@
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-clock"></i>
-                            <span>Mon – Fri: 8:00 AM – 5:00 PM</span>
+                            <span>Tue – Fri: 8:00 AM – 5:00 PM</span>
                         </div>
                     </div>
                 </div>
@@ -838,7 +839,7 @@
     
     <script>
     (function () {
-        // ===== NAV & DARK MODE LOGIC (From Index) =====
+        // ===== NAV & DARK MODE LOGIC =====
         const arrowBtn = document.getElementById('dropdownArrowBtn');
         const dropdownMenu = document.getElementById('aboutDropdownMenu');
         const parentDD = document.getElementById('aboutSplitDropdown');
@@ -884,7 +885,6 @@
             });
         });
 
-        // Close mobile menu and dropdowns on scroll
         window.addEventListener('scroll', function() {
             if (window.innerWidth < 992) {
                 const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
@@ -949,7 +949,7 @@
                         </p>
                         <hr style="margin: 10px 0; border-color: rgba(0,0,0,0.1);">
                         <p style="margin: 8px 0; font-size: 12px; color: #555;">
-                            <i class="fas fa-clock" style="color: var(--primary-main);"></i> Mon-Fri: 8:00 AM - 5:00 PM<br>
+                            <i class="fas fa-clock" style="color: var(--primary-main);"></i> Tue-Fri: 8:00 AM - 5:00 PM<br>
                             <i class="fas fa-phone" style="color: var(--primary-main);"></i> 0912-345-6789
                         </p>
                         <div style="display: flex; gap: 8px; justify-content: center; margin-top: 16px;">
@@ -1036,16 +1036,17 @@
             });
         });
 
-        // ===== OFFICE HOURS STATUS LOGIC =====
+        // ===== OFFICE HOURS STATUS LOGIC (UPDATED FOR TUE-FRI) =====
         function updateOfficeStatus() {
             const now = new Date();
-            const day = now.getDay(); // 0 is Sun, 6 is Sat
-            const hour = now.getHours(); // 0-23
+            const day = now.getDay(); // 0 = Sun, 1 = Mon, 2 = Tue, 3 = Wed, 4 = Thu, 5 = Fri, 6 = Sat
+            const hour = now.getHours();
 
             const statusBadge = document.getElementById('officeStatusBadge');
             if (statusBadge) {
-                // Mon-Fri (1-5) and 8 AM to 4:59 PM (hour >= 8 && hour < 17)
-                if (day >= 1 && day <= 5 && hour >= 8 && hour < 17) {
+                // Available only Tuesday to Friday (day 2,3,4,5) and between 8AM to 5PM (8-16)
+                const isOpen = (day >= 2 && day <= 5) && (hour >= 8 && hour < 17);
+                if (isOpen) {
                     statusBadge.innerHTML = '<i class="fas fa-door-open me-1"></i> We\'re In';
                     statusBadge.className = 'badge rounded-pill px-3 py-2 bg-success text-white shadow-sm';
                 } else {
@@ -1056,8 +1057,7 @@
         }
         
         updateOfficeStatus();
-        setInterval(updateOfficeStatus, 60000); // Check every minute
-
+        setInterval(updateOfficeStatus, 60000);
     })();
     </script>
 </body>
