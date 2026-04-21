@@ -121,7 +121,6 @@
             }
             .hamburger-line { width: 22px; height: 2px; background: var(--primary-dark); border-radius: 4px; transition: all 0.25s; }
             
-            /* FIX: Absolute positioning for mobile dropdown */
             .navbar { position: relative; }
             .navbar-collapse {
                 position: absolute;
@@ -139,7 +138,6 @@
             .nav-link { color: var(--text-primary) !important; font-size: 0.95rem; padding: 11px 14px !important; border-radius: 18px; font-weight: 600; }
             .nav-link:hover { background: rgba(0,104,56,0.06); color: var(--primary-main) !important; }
 
-            /* FIX: Mobile split dropdown layout */
             .split-dropdown-wrapper { width: 100%; display: flex; }
             .about-main-link {
                 flex-grow: 1;
@@ -283,20 +281,32 @@
             margin-right: auto;
         }
 
-        /* ===== ORGANIZATIONAL CHART SPECIFIC STYLES ===== */
+        /* ===== ENHANCED ORGANIZATIONAL CHART - REMOVED SCROLL HINT ===== */
         .tree-wrapper {
             width: 100%;
             overflow-x: auto;
+            overflow-y: visible;
             padding: clamp(40px, 6vw, 80px) 20px;
             background: var(--bg-body);
+            display: flex;
+            justify-content: flex-start;
+            cursor: grab;
+            scroll-behavior: smooth;
+        }
+        .tree-wrapper:active {
+            cursor: grabbing;
         }
         
+        /* Pinalaki ang min-width para siguradong mag-scroll at makita si Dr. Escoto */
         .tree {
-            min-width: 850px;
+            min-width: 1400px;
+            margin: 0 auto;
+            display: inline-block;
+            transition: var(--transition);
         }
         
         .tree ul {
-            padding-top: 20px;
+            padding-top: 20px; 
             position: relative;
             transition: var(--transition);
             display: flex;
@@ -304,17 +314,16 @@
             list-style: none;
             padding-left: 0;
         }
-        
+
         .tree li {
-            float: left;
             text-align: center;
             list-style-type: none;
             position: relative;
-            padding: 20px 8px 0 8px;
+            padding: 20px 10px 0 10px;
             transition: var(--transition);
+            flex: 1 1 auto;
         }
-        
-        /* Lines Connection - Professional Style */
+
         .tree li::before, .tree li::after {
             content: '';
             position: absolute;
@@ -323,8 +332,6 @@
             border-top: 2px solid var(--primary-accent);
             width: 50%;
             height: 20px;
-            opacity: 0.8;
-            transition: var(--transition);
         }
         .tree li::after {
             right: auto;
@@ -362,7 +369,7 @@
         body.dark-mode .tree li::before,
         body.dark-mode .tree li::after,
         body.dark-mode .tree ul::before {
-            border-color: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
         }
 
         /* Node Design - 3D Cards */
@@ -404,7 +411,7 @@
             background: var(--bg-card);
             border: 2px solid var(--primary-main);
             padding: 24px 14px 14px 14px;
-            min-width: 200px;
+            min-width: 210px;
             z-index: 2;
             border-radius: 20px;
             box-shadow: var(--shadow-sm);
@@ -424,7 +431,7 @@
         body.dark-mode .org-wrapper:hover .org-box { border-color: var(--gold-main); }
         
         .org-box h6 {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: var(--primary-dark);
             margin-bottom: 4px;
@@ -441,7 +448,6 @@
         }
         body.dark-mode .org-box p { color: var(--text-muted); }
 
-        /* Animation */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -450,13 +456,13 @@
         
         @media (max-width: 768px) {
             .org-box {
-                min-width: 150px;
+                min-width: 170px;
                 padding: 20px 10px 10px 10px;
             }
             .org-box h6 { font-size: 0.7rem; }
             .org-box p { font-size: 0.65rem; }
             .org-avatar { width: 64px; height: 64px; margin-bottom: -10px; border-width: 3px; }
-            .tree { min-width: 700px; }
+            .tree { min-width: 1300px; }
         }
 
         /* ===== FOOTER (EXACTLY FROM INDEX) ===== */
@@ -581,7 +587,7 @@
         </div>
     </section>
 
-    <main class="tree-wrapper">
+    <main class="tree-wrapper" id="treeScrollWrapper">
         <div class="tree">
             <ul>
                 <li>
@@ -602,6 +608,7 @@
                                         <div class="org-box"><h6>MELISSA GRACE P. NACINO</h6><p>OSAS Director</p></div>
                                     </div>
                                     <ul>
+                                        <!-- NANDITO SI DR. MARILYN GANTE-ESCOTO, MD - kita sa horizontal scroll -->
                                         <li>
                                             <div class="org-wrapper">
                                                 <div class="org-avatar"><img src="assets/doc.png" alt="Marilyn Gante-Escoto" onerror="this.src='https://placehold.co/80x80?text=MD'"></div>
@@ -665,6 +672,7 @@
         <div class="container footer-inner">
             <div class="row g-5">
                 <div class="col-lg-4 text-center text-lg-start">
+                     
                     <img src="assets/hsu_logo.png" alt="Health Services Unit Logo" class="footer-logo-transparent" onerror="this.src='https://placehold.co/180x180?text=HSU'">
                     <span class="footer-brand-large">HEALTH SERVICES UNIT</span>
                     <p class="mt-3" style="color: rgba(255,255,255,0.48); font-size: 0.86rem; max-width: 290px; margin: 12px auto 0; line-height: 1.65;">
@@ -731,7 +739,6 @@
     
     <script>
     (function () {
-        // ===== NAV & DARK MODE LOGIC (From Index) =====
         const arrowBtn = document.getElementById('dropdownArrowBtn');
         const dropdownMenu = document.getElementById('aboutDropdownMenu');
         const parentDD = document.getElementById('aboutSplitDropdown');
@@ -777,7 +784,6 @@
             });
         });
 
-        // --- NEW: Close mobile menu and dropdowns on scroll ---
         window.addEventListener('scroll', function() {
             if (window.innerWidth < 992) {
                 const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
@@ -787,7 +793,6 @@
             }
             closeAboutDD();
         }, { passive: true });
-        // ------------------------------------------------------
 
         const darkToggle = document.getElementById('darkmodeFooterPro');
         const body = document.body;
@@ -805,6 +810,36 @@
             icon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
         });
 
+        // Drag-to-scroll para madaling mag-horizontal scroll
+        const scrollContainer = document.getElementById('treeScrollWrapper');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        if (scrollContainer) {
+            scrollContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                scrollContainer.style.cursor = 'grabbing';
+                startX = e.pageX - scrollContainer.offsetLeft;
+                scrollLeft = scrollContainer.scrollLeft;
+            });
+            scrollContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+                scrollContainer.style.cursor = 'grab';
+            });
+            scrollContainer.addEventListener('mouseup', () => {
+                isDown = false;
+                scrollContainer.style.cursor = 'grab';
+            });
+            scrollContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - scrollContainer.offsetLeft;
+                const walk = (x - startX) * 1.2;
+                scrollContainer.scrollLeft = scrollLeft - walk;
+            });
+            scrollContainer.style.cursor = 'grab';
+        }
     })();
     </script>
 </body>
