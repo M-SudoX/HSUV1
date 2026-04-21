@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Organizational Chart | Health Services Unit | ASCOT</title>
     
-    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     
@@ -289,71 +289,6 @@
             overflow-x: auto;
             padding: clamp(40px, 6vw, 80px) 20px;
             background: var(--bg-body);
-            position: relative;
-        }
-        
-        /* SCROLL HINT / INDICATOR PARA SA MOBILE */
-        .scroll-hint {
-            display: none;
-            text-align: center;
-            padding: 10px 16px;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--primary-main);
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            animation: pulseHint 1.5s ease infinite;
-        }
-        
-        .scroll-hint i {
-            font-size: 0.9rem;
-        }
-        
-        @keyframes pulseHint {
-            0%, 100% { opacity: 0.6; transform: translateX(0); }
-            50% { opacity: 1; transform: translateX(5px); }
-        }
-        
-        /* Desktop arrow indicator sa gilid ng tree wrapper */
-        .tree-wrapper::after {
-            content: '→';
-            position: sticky;
-            right: 15px;
-            bottom: 30px;
-            float: right;
-            background: var(--primary-main);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            box-shadow: var(--shadow-md);
-            z-index: 100;
-            pointer-events: none;
-            animation: bounceArrow 1s ease infinite;
-        }
-        
-        @keyframes bounceArrow {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(5px); }
-        }
-        
-        /* Ipakita ang scroll hints sa mobile */
-        @media (max-width: 768px) {
-            .scroll-hint {
-                display: flex;
-            }
-            .tree-wrapper::after {
-                display: flex;
-            }
         }
         
         .tree {
@@ -506,17 +441,6 @@
         }
         body.dark-mode .org-box p { color: var(--text-muted); }
 
-        /* I-highlight si Dr. Escoto para mas kita */
-        .org-wrapper.highlight .org-box {
-            border-color: var(--gold-main);
-            box-shadow: 0 0 0 3px rgba(252,226,104,0.4), var(--shadow-md);
-        }
-        
-        body.dark-mode .org-wrapper.highlight .org-box {
-            border-color: var(--gold-main);
-            box-shadow: 0 0 0 3px rgba(252,226,104,0.3), var(--shadow-md);
-        }
-
         /* Animation */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -657,13 +581,6 @@
         </div>
     </section>
 
-    <!-- SCROLL HINT PARA SA MOBILE USERS -->
-    <div class="scroll-hint">
-        <i class="fas fa-arrow-left"></i> 
-        Swipe or scroll right to see full chart 
-        <i class="fas fa-arrow-right"></i>
-    </div>
-
     <main class="tree-wrapper">
         <div class="tree">
             <ul>
@@ -685,9 +602,8 @@
                                         <div class="org-box"><h6>MELISSA GRACE P. NACINO</h6><p>OSAS Director</p></div>
                                     </div>
                                     <ul>
-                                        <!-- HIGHLIGHTED: Dr. Escoto with special class -->
                                         <li>
-                                            <div class="org-wrapper highlight" id="drEscoto">
+                                            <div class="org-wrapper">
                                                 <div class="org-avatar"><img src="assets/doc.png" alt="Marilyn Gante-Escoto" onerror="this.src='https://placehold.co/80x80?text=MD'"></div>
                                                 <div class="org-box"><h6>MARILYN GANTE-ESCOTO, MD</h6><p>Medical Specialist</p></div>
                                             </div>
@@ -796,7 +712,7 @@
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-clock"></i>
-                            <span>Tue – Fri: 8:00 AM – 5:00 PM</span>
+                            <span>Mon – Fri: 8:00 AM – 5:00 PM</span>
                         </div>
                     </div>
                 </div>
@@ -810,8 +726,8 @@
             </div>
         </div>
     </footer>
-    
-    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
     (function () {
@@ -861,7 +777,7 @@
             });
         });
 
-        // Close mobile menu and dropdowns on scroll
+        // --- NEW: Close mobile menu and dropdowns on scroll ---
         window.addEventListener('scroll', function() {
             if (window.innerWidth < 992) {
                 const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
@@ -871,6 +787,7 @@
             }
             closeAboutDD();
         }, { passive: true });
+        // ------------------------------------------------------
 
         const darkToggle = document.getElementById('darkmodeFooterPro');
         const body = document.body;
@@ -888,17 +805,6 @@
             icon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
         });
 
-        // AUTO-SCROLL SA DOKTOR KAPAG MOBILE (OPTIONAL)
-        // Ito ay para automatic mag-scroll papunta kay Dr. Escoto pag mobile
-        if (window.innerWidth < 768) {
-            const drEscoto = document.getElementById('drEscoto');
-            if (drEscoto) {
-                setTimeout(function() {
-                    drEscoto.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-                }, 500);
-            }
-        }
-        
     })();
     </script>
 </body>
