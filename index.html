@@ -55,6 +55,11 @@
         }
         h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; letter-spacing: -0.02em; }
 
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
         /* ===== STICKY HEADER ===== */
         .top-header {
             position: sticky;
@@ -579,11 +584,6 @@
             .stats-row { grid-template-columns: 1fr 1fr 1fr; }
         }
     </style>
-    <script 
-        src="https://www.tuqlas.com/chatbot.js" 
-        data-key="tq_live_8ae0ee7f49964b136d275e7a3f67324aec8dcfeb" 
-        data-api="https://www.tuqlas.com">
-    </script>
 </head>
 <body>
 
@@ -741,7 +741,7 @@
                     <img src="assets/hsu_logo.png" alt="Health Services Unit Logo" class="footer-logo-transparent" onerror="this.src='https://placehold.co/180x180?text=HSU'">
                     <span class="footer-brand-large">HEALTH SERVICES UNIT</span>
                     <p class="mt-3" style="color: rgba(255,255,255,0.48); font-size: 0.86rem; max-width: 290px; margin: 12px auto 0; line-height: 1.65;">
-                        Committed to excellence in student healthcare and wellness promotion across Aurora State College of Technology.
+                        Dedicated to student healthcare and wellness at Aurora State College of Technology.
                     </p>
                     <div class="social-links-footer justify-content-center justify-content-lg-start">
                         <a href="https://www.facebook.com/ascotclinic" target="_blank" class="social-icon-circle"><i class="fab fa-facebook-f"></i></a>
@@ -800,9 +800,283 @@
         </div>
     </footer>
 
+    <!-- Advanced Chatbot with File Upload & AI Capabilities -->
+    <div id="hsuChatbot"></div>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
-    (function () {
+    (function() {
+        // ==================== CHATBOT SETUP ====================
+        const config = {
+            botName: "HSU Health Assistant",
+            primaryColor: "#006838",
+            accentColor: "#fce268",
+            // Predefined responses for common healthcare questions
+            knowledgeBase: {
+                "services": "The Health Services Unit offers: Dental Health & Exams, Online Consultations, Mental Health Counseling, Emergency First Aid, Medicine Dispensing, Preventive Screenings, Health Education, and First Aid Training.",
+                "schedule": "The clinic is open Monday to Friday, 8:00 AM to 5:00 PM. The doctor is available for consultation from 9:00 AM to 12:00 PM and 1:00 PM to 4:00 PM, Monday to Thursday.",
+                "appointment": "To schedule an appointment, please email ascothealthservices@gmail.com or call 0912-345-6789. Walk-ins are also welcome during clinic hours.",
+                "emergency": "For medical emergencies, please proceed to the nearest hospital or call emergency hotline 911. First aid is available at the clinic during operating hours.",
+                "location": "The Health Services Unit is located at ASCOT Main Campus, Brgy. Zabali, Baler, Aurora, Philippines 3200.",
+                "contact": "You can reach us via email at ascothealthservices@gmail.com or phone at 0912-345-6789.",
+                "nurse": "Our College Nurse is Genalyn C. Gudoy. She is available during clinic hours for consultations and health concerns.",
+                "mental health": "Mental health counseling is available. Please schedule an appointment through email or contact the clinic directly for confidential support.",
+                "first aid": "First aid treatment is available at the clinic. For emergencies, call 911 immediately."
+            }
+        };
+
+        // Create chatbot HTML
+        const chatbotHTML = `
+            <div id="chatbotContainer" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; font-family: 'Inter', sans-serif;">
+                <button id="chatToggleBtn" style="
+                    width: 64px; height: 64px; border-radius: 50%;
+                    background: linear-gradient(135deg, ${config.primaryColor}, #013219);
+                    border: none; box-shadow: 0 8px 24px rgba(0,104,56,0.35);
+                    cursor: pointer; display: flex; align-items: center; justify-content: center;
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    color: white; font-size: 28px;
+                ">
+                    <i class="fas fa-comment-medical" style="font-size: 28px;"></i>
+                </button>
+
+                <div id="chatWindow" style="
+                    position: absolute; bottom: 80px; right: 0;
+                    width: 380px; max-width: calc(100vw - 48px);
+                    height: 560px; max-height: calc(100vh - 120px);
+                    background: var(--bg-card, #ffffff);
+                    border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+                    display: none; flex-direction: column; overflow: hidden;
+                    border: 1px solid var(--border-light, rgba(0,0,0,0.1));
+                ">
+                    <div style="
+                        background: linear-gradient(135deg, ${config.primaryColor}, #013219);
+                        padding: 18px 20px; color: white;
+                        display: flex; align-items: center; justify-content: space-between;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fas fa-heartbeat" style="font-size: 24px; color: ${config.accentColor};"></i>
+                            <div>
+                                <div style="font-weight: 800; font-size: 1rem;">${config.botName}</div>
+                                <div style="font-size: 0.7rem; opacity: 0.85;">by Health Services Unit</div>
+                            </div>
+                        </div>
+                        <button id="closeChatBtn" style="
+                            background: rgba(255,255,255,0.2); border: none;
+                            color: white; width: 32px; height: 32px;
+                            border-radius: 50%; cursor: pointer;
+                        ">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div id="chatMessages" style="
+                        flex: 1; overflow-y: auto; padding: 16px;
+                        background: var(--bg-body, #f0f4f8);
+                        display: flex; flex-direction: column; gap: 12px;
+                    ">
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="
+                                width: 32px; height: 32px;
+                                background: ${config.primaryColor}; border-radius: 50%;
+                                display: flex; align-items: center; justify-content: center;
+                                flex-shrink: 0;
+                            ">
+                                <i class="fas fa-robot" style="color: white; font-size: 14px;"></i>
+                            </div>
+                            <div style="
+                                background: var(--bg-card, #ffffff); padding: 10px 14px;
+                                border-radius: 18px; border-top-left-radius: 4px;
+                                max-width: 80%; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+                                font-size: 0.85rem; line-height: 1.5;
+                                color: var(--text-primary, #1a2536);
+                            ">
+                                Hello! 👋 I'm the HSU Health Assistant.<br>
+                                You can ask me about:<br>
+                                • Services & schedule 📋<br>
+                                • Appointments & contact info 📞<br>
+                                • Emergency procedures 🚨<br>
+                                • Mental health support 🧠<br>
+                                • And more!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="
+                        padding: 12px 16px; border-top: 1px solid var(--border-light, rgba(0,0,0,0.07));
+                        background: var(--bg-card, #ffffff);
+                        display: flex; gap: 8px; align-items: center;
+                    ">
+                        <input type="text" id="chatInput" placeholder="Type your question here..." style="
+                            flex: 1; padding: 12px 16px;
+                            border: 1px solid var(--border-light, #ddd);
+                            border-radius: 50px; background: var(--bg-body, #f0f4f8);
+                            color: var(--text-primary, #1a2536);
+                            font-family: inherit; font-size: 0.85rem; outline: none;
+                        ">
+                        <button id="sendChatBtn" style="
+                            background: ${config.primaryColor}; border: none;
+                            width: 44px; height: 44px; border-radius: 50%;
+                            color: white; cursor: pointer;
+                            display: flex; align-items: center; justify-content: center;
+                        ">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Inject chatbot
+        document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+
+        // DOM elements
+        const toggleBtn = document.getElementById('chatToggleBtn');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeBtn = document.getElementById('closeChatBtn');
+        const sendBtn = document.getElementById('sendChatBtn');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        let isOpen = false;
+
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.display = 'flex';
+            messageDiv.style.gap = '10px';
+            messageDiv.style.alignItems = 'flex-start';
+            messageDiv.style.justifyContent = isUser ? 'flex-end' : 'flex-start';
+            
+            if (!isUser) {
+                const avatar = document.createElement('div');
+                avatar.style.width = '32px';
+                avatar.style.height = '32px';
+                avatar.style.background = config.primaryColor;
+                avatar.style.borderRadius = '50%';
+                avatar.style.display = 'flex';
+                avatar.style.alignItems = 'center';
+                avatar.style.justifyContent = 'center';
+                avatar.style.flexShrink = '0';
+                avatar.innerHTML = '<i class="fas fa-robot" style="color: white; font-size: 14px;"></i>';
+                messageDiv.appendChild(avatar);
+            }
+            
+            const bubble = document.createElement('div');
+            bubble.style.background = isUser ? config.primaryColor : 'var(--bg-card, #ffffff)';
+            bubble.style.color = isUser ? 'white' : 'var(--text-primary, #1a2536)';
+            bubble.style.padding = '10px 14px';
+            bubble.style.borderRadius = '18px';
+            bubble.style.borderTopLeftRadius = isUser ? '18px' : '4px';
+            bubble.style.borderTopRightRadius = isUser ? '4px' : '18px';
+            bubble.style.maxWidth = '80%';
+            bubble.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+            bubble.style.fontSize = '0.85rem';
+            bubble.style.lineHeight = '1.5';
+            bubble.style.whiteSpace = 'pre-wrap';
+            bubble.textContent = text;
+            
+            messageDiv.appendChild(bubble);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(question) {
+            const q = question.toLowerCase().trim();
+            
+            // Check knowledge base
+            for (const [key, response] of Object.entries(config.knowledgeBase)) {
+                if (q.includes(key.toLowerCase())) {
+                    return response;
+                }
+            }
+            
+            // Common variations
+            if (q.includes('doctor') || q.includes('physician')) {
+                return "The college doctor is available for consultation from 9:00 AM to 12:00 PM and 1:00 PM to 4:00 PM, Monday to Thursday. Referrals can be coordinated through the clinic nurse.";
+            }
+            if (q.includes('hour') || q.includes('time')) {
+                return "The Health Services Unit is open Monday to Friday, 8:00 AM to 5:00 PM. We are closed on weekends and public holidays.";
+            }
+            if (q.includes('thank')) {
+                return "You're welcome! 😊 If you have more questions, feel free to ask anytime. Stay healthy! 💚";
+            }
+            if (q.includes('hi') || q.includes('hello') || q.includes('hey')) {
+                return "Hello! 👋 How can I assist you with your health concerns today?";
+            }
+            
+            return "Thank you for your question. For specific medical concerns, please visit the clinic or call us directly at 0912-345-6789. Is there anything else I can help you with?";
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            // Show typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.style.display = 'flex';
+            typingDiv.style.gap = '6px';
+            typingDiv.style.alignItems = 'center';
+            typingDiv.style.padding = '8px 12px';
+            typingDiv.style.background = 'var(--bg-card, #ffffff)';
+            typingDiv.style.borderRadius = '18px';
+            typingDiv.style.width = 'fit-content';
+            typingDiv.innerHTML = '<span style="width: 8px; height: 8px; background: #006838; border-radius: 50%; animation: bounce 1.4s infinite;"></span><span style="width: 8px; height: 8px; background: #006838; border-radius: 50%; animation: bounce 1.4s infinite 0.2s;"></span><span style="width: 8px; height: 8px; background: #006838; border-radius: 50%; animation: bounce 1.4s infinite 0.4s;"></span>';
+            
+            const messageContainer = document.createElement('div');
+            messageContainer.style.display = 'flex';
+            messageContainer.style.gap = '10px';
+            messageContainer.style.alignItems = 'center';
+            const avatar = document.createElement('div');
+            avatar.style.width = '32px';
+            avatar.style.height = '32px';
+            avatar.style.background = config.primaryColor;
+            avatar.style.borderRadius = '50%';
+            avatar.style.display = 'flex';
+            avatar.style.alignItems = 'center';
+            avatar.style.justifyContent = 'center';
+            avatar.innerHTML = '<i class="fas fa-robot" style="color: white; font-size: 14px;"></i>';
+            messageContainer.appendChild(avatar);
+            messageContainer.appendChild(typingDiv);
+            chatMessages.appendChild(messageContainer);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            setTimeout(() => {
+                messageContainer.remove();
+                const response = getBotResponse(message);
+                addMessage(response, false);
+            }, 800);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            chatWindow.style.display = isOpen ? 'flex' : 'none';
+            if (isOpen) chatInput.focus();
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            isOpen = false;
+            chatWindow.style.display = 'none';
+        });
+        
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Dark mode animation style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 60%, 100% { transform: translateY(0); }
+                30% { transform: translateY(-8px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ==================== EXISTING HEADER/DROPDOWN CODE ====================
         const arrowBtn = document.getElementById('dropdownArrowBtn');
         const dropdownMenu = document.getElementById('aboutDropdownMenu');
         const parentDD = document.getElementById('aboutSplitDropdown');
@@ -848,7 +1122,6 @@
             });
         });
 
-        // --- NEW: Close mobile menu and dropdowns on scroll ---
         window.addEventListener('scroll', function() {
             if (window.innerWidth < 992) {
                 const bsc = bootstrap.Collapse.getInstance(navbarCollapse);
@@ -858,7 +1131,6 @@
             }
             closeAboutDD();
         }, { passive: true });
-        // ------------------------------------------------------
 
         const darkToggle = document.getElementById('darkmodeFooterPro');
         const body = document.body;
